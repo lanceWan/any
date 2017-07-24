@@ -177,6 +177,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Krucas\Settings\Providers\SettingsServiceProvider::class,
+        Ultraware\Roles\RolesServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+
     ],
 
     /*
@@ -225,6 +229,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        'Settings' => Krucas\Settings\Facades\Settings::class,
 
     ],
 
