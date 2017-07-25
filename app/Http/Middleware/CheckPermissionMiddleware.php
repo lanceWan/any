@@ -59,8 +59,9 @@ class CheckPermissionMiddleware
                 return false;
             }
 
+            $newPermssion = $this->createPermission($user, $permission);
+
             if ($isAdmin) {
-                $newPermssion = $this->createPermission($user, $permission);
                 $user->attachPermission($newPermssion);
                 setUserPermissions($user);
             }
@@ -121,7 +122,7 @@ class CheckPermissionMiddleware
      */
     private function getCurrentControllerName()  
     {  
-        return str_replace($this->getCurrentActionAttribute()['namespace'], '', $this->getCurrentActionAttribute()['controller']);
+        return $this->getCurrentActionAttribute()['controller'];
     }  
 
     /**
@@ -132,9 +133,9 @@ class CheckPermissionMiddleware
      */
     private function getCurrentActionAttribute()  
     {  
-        $action = Route::current()->getAction();
-        list($class, $method) = explode('@', $action['controller']);  
-        return ['controller' => $class, 'method' => $method , 'namespace' => $action['namespace'].'\\'];
+        $action = Route::currentRouteAction();
+        list($class, $method) = explode('@', $action);
+        return ['controller' => class_basename($class), 'method' => $method];
     } 
 
 

@@ -180,6 +180,9 @@ return [
         Krucas\Settings\Providers\SettingsServiceProvider::class,
         Ultraware\Roles\RolesServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
+        Yajra\Datatables\HtmlServiceProvider::class,
+        Yajra\Datatables\ButtonsServiceProvider::class,
 
     ],
 

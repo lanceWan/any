@@ -10,7 +10,10 @@
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "prettus/l5-repository": "^2.6",
-        "ultraware/roles": "^5.4"
+        "ultraware/roles": "^5.4",
+        "yajra/laravel-datatables-buttons": "^2.0",
+        "yajra/laravel-datatables-html": "^2.0",
+        "yajra/laravel-datatables-oracle": "^7.9"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
