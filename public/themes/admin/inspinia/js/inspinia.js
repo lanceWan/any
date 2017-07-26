@@ -8,6 +8,10 @@
 
 $(document).ready(function () {
 
+    // 关闭modal清空内容
+    $(".modal").on("hidden.bs.modal",function(e){
+       $(this).removeData("bs.modal");
+    });
 
     // Add body-small class if window less than 768px
     if ($(this).width() < 769) {

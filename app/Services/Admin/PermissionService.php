@@ -10,13 +10,18 @@ use Datatables;
 
 class PermissionService {
 
+	/**
+	 * 权限首页
+	 * @Author   晚黎
+	 * @DateTime 2017-07-26T22:42:27+0800
+	 * @return   [type]                   [description]
+	 */
 	public function index()
 	{
 		if (request()->ajax()) {
 			return Datatables::of(PermissionRepositoryEloquent::all())
 				->addIndexColumn()
 				->addColumn('action', getThemeView('datatables.action'))
-				// ->editColumn('name', getThemeView('datatables.edit'))
 				->make(true);
 		}
 
@@ -42,6 +47,24 @@ Eof
 	        ->addAction(['data' => 'action', 'name' => 'action', 'title' => trans('common.action')]);
 
         return compact('html');
+	}
+
+	/**
+	 * 添加权限
+	 * @Author   晚黎
+	 * @DateTime 2017-07-26T22:42:59+0800
+	 * @param    [type]                   $attributes [description]
+	 * @return   [type]                               [description]
+	 */
+	public function store($attributes)
+	{
+		try {
+			$result = PermissionRepositoryEloquent::create($attributes);
+			flash_info($result,trans('common.create_success'),trans('common.create_error'));
+			return isset($attributes['rediret']) ? 'permission.index':'permission.create';
+		} catch (Exception $e) {
+			return 'permission.create';
+		}
 	}
 
 }

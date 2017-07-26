@@ -1,7 +1,5 @@
 <?php
 
 return [
-	'attributes' => [
-		'title' => '控制台'
-	]
+	'title' => '控制台'
 ];

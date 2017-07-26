@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\PermissionService;
-
+use App\Http\Requests\Admin\PermissionRequest;
 class PermissionController extends Controller
 {
     protected $service;
@@ -33,7 +33,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        return view(getThemeView('permission.create'));
     }
 
     /**
@@ -42,9 +42,10 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PermissionRequest $request)
     {
-        //
+        $route = $this->service->store($request->all());
+        return redirect()->route($route);
     }
 
     /**
