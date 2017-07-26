@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'PRC',
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'zh-CN',
 
     /*
     |--------------------------------------------------------------------------
@@ -183,6 +183,8 @@ return [
         Yajra\Datatables\DatatablesServiceProvider::class,
         Yajra\Datatables\HtmlServiceProvider::class,
         Yajra\Datatables\ButtonsServiceProvider::class,
+        Barryvdh\TranslationManager\ManagerServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
 
     ],
 
