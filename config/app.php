@@ -185,6 +185,7 @@ return [
         Yajra\Datatables\ButtonsServiceProvider::class,
         Barryvdh\TranslationManager\ManagerServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
+        Vinkla\Hashids\HashidsServiceProvider::class,
 
     ],
 
@@ -236,6 +237,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Settings' => Krucas\Settings\Facades\Settings::class,
+        'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
 
     ],
 

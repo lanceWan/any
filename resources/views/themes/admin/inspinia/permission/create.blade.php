@@ -17,7 +17,7 @@
   </div>
   <div class="col-lg-2">
     <div class="title-action">
-      <a class="btn btn-white" href="{{url()->previous()}}"><i class="fa fa-reply"></i>  {!!trans('common.cancel')!!}</a>
+      <a class="btn btn-white" href="{{route('permission.index')}}"><i class="fa fa-reply"></i>  {!!trans('common.cancel')!!}</a>
     </div>
   </div>
 </div>
@@ -69,8 +69,10 @@
             <div class="hr-line-dashed"></div>
             <div class="form-group">
               <div class="col-sm-4 col-sm-offset-2">
-                  <a class="btn btn-white" href="{{url()->previous()}}">{!!trans('common.cancel')!!}</a>
+                  <a class="btn btn-white" href="{{route('permission.index')}}">{!!trans('common.cancel')!!}</a>
+                  @haspermission('permissioncontroller.store')
                   <button class="btn btn-primary" type="submit">{!!trans('common.create')!!}</button>
+                  @endhaspermission
               </div>
             </div>
           </form>
