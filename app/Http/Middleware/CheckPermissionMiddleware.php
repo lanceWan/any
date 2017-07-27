@@ -59,7 +59,7 @@ class CheckPermissionMiddleware
                 return false;
             }
 
-            $newPermssion = $this->createPermission($user, $permission);
+            $newPermssion = $this->createPermission($permission);
 
             if ($isAdmin) {
                 $user->attachPermission($newPermssion);
@@ -92,7 +92,7 @@ class CheckPermissionMiddleware
      * @param  [type]                   $user [description]
      * @return [type]                         [description]
      */
-    public function createPermission($user, $permission)
+    public function createPermission($permission)
     {
         // 添加权限
         return Permission::firstOrCreate([

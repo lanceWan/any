@@ -8,5 +8,12 @@ return [
 	'command' => [
 		// service 目录名称
 		'namespace' => 'Services\\',
+	],
+	// id加密配置
+	'encrypt' => [
+		'main' => true,
+		'permission' => true,
+		'role' => true,
+		'user' => true,
 	]
 ];

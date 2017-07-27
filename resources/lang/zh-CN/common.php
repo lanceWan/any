@@ -9,4 +9,13 @@ return [
 	'cancel' => '返回',
 	'create_success' => '新增成功！',
 	'create_error' => '新增失败！',
+	'find_error' => '未找到数据！',
+	'decode_error' => '解密失败！',
+	'edit_success' => '修改成功！',
+	'edit_error' => '修改失败！',
+	'destroy_success' => '删除成功！',
+	'destroy_error' => '删除失败！',
+	'deleteTitle' => '确定删除该',
+	'yes' => '确定',
+	'no' => '取消',
 ];

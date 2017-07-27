@@ -186,6 +186,7 @@ return [
         Barryvdh\TranslationManager\ManagerServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 

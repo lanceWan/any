@@ -67,7 +67,8 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $result = $this->service->edit($id);
+        return view(getThemeView('permission.edit'))->with($result);
     }
 
     /**
@@ -77,9 +78,10 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PermissionRequest $request, $id)
     {
-        //
+        $route = $this->service->update($request->all(), $id);
+        return redirect()->route($route);
     }
 
     /**
@@ -90,6 +92,7 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $route = $this->service->destroy($id);
+        return redirect()->route($route);
     }
 }

@@ -49,5 +49,19 @@
 @endsection
 @section('js')
   <script src="{{asset(getThemeAssets('dataTables/datatables.min.js', true))}}"></script>
+  <script src="{{asset(getThemeAssets('layer/layer.js', true))}}"></script>
+  <script type="text/javascript">
+    $(document).on('click','.destroy_item',function() {
+      var _item = $(this);
+      var title = "{{trans('common.deleteTitle').trans('permission.slug')}}？";
+      layer.confirm(title, {
+        btn: ['{{trans('common.yes')}}', '{{trans('common.no')}}'],
+        icon: 5
+      },function(index){
+        _item.children('form').submit();
+        layer.close(index);
+      });
+    });
+  </script>
   {!! $html->scripts() !!}
 @endsection

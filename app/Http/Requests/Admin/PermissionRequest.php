@@ -31,9 +31,8 @@ class PermissionRequest extends FormRequest
             // 修改时 request()->method() 方法返回的是 PUT或PATCH
             $rules['slug'] = [
                 'required',
-                Rule::unique('permissions')->ignore($this->id),
+                Rule::unique('permissions')->ignore(decodeId(request()->route('permission'), 'permission')),
             ];
-            $rules['id'] = 'required';
         }
         return $rules;
     }
