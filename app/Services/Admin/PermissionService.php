@@ -6,13 +6,17 @@ use Facades\ {
     Yajra\Datatables\Html\Builder
 };
 
+use App\Traits\DatatableActionButtonTrait;
+
 use Datatables;
 
 use Exception;
 
 class PermissionService {
 
-	protected $encrypt = 'permission';
+	use DatatableActionButtonTrait;
+
+	protected $module = 'permission';
 
 	protected $indexRoute = 'permission.index';
 
@@ -70,15 +74,7 @@ Eof
 			->addIndexColumn()
 			->addColumn('action', function ($permission)
 			{
-				
-				// 配置按钮权限，目前写死，还没想到好的方案
-				$connection = $this->encrypt;
-				$encodeId = encodeId($permission->id, $this->encrypt);
-				$route = [
-					'edit' => route($this->editRoute, [$encodeId]),
-					'destroy' => route($this->destroyRoute, [$encodeId]),
-				];
-				return view(getThemeView('datatables.action'))->with(compact('route', 'connection'))->render();
+				return $this->getActionButtonAttribute($permission->id);
 			})
 			->make(true);
 	}
@@ -115,7 +111,7 @@ Eof
 	public function edit($id)
 	{
 		try {
-			$permission = PermissionRepositoryEloquent::find(decodeId($id, $this->encrypt));
+			$permission = PermissionRepositoryEloquent::find(decodeId($id, $this->module));
 			return compact('permission');
 		} catch (Exception $e) {
 			flash(trans('common.find_error'), 'danger');
@@ -134,7 +130,7 @@ Eof
 	public function update($attributes, $id)
 	{
 		try {
-			$result = PermissionRepositoryEloquent::update($attributes, decodeId($id, $this->encrypt));
+			$result = PermissionRepositoryEloquent::update($attributes, decodeId($id, $this->module));
 			flash_info($result,trans('common.edit_success'),trans('common.edit_error'));
 			return $result ? $this->indexRoute : $this->editRoute;
 		} catch (Exception $e) {
@@ -153,7 +149,7 @@ Eof
 	public function destroy($id)
 	{
 		try {
-			$result = PermissionRepositoryEloquent::delete($attributes, decodeId($id, $this->encrypt));
+			$result = PermissionRepositoryEloquent::delete(decodeId($id, $this->module));
 			flash_info($result,trans('common.destroy_success'),trans('common.destroy_error'));
 			return $result ? $this->indexRoute : $this->destroyRoute;
 		} catch (Exception $e) {

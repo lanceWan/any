@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Permission;
+use App\Models\Role;
 
 use Closure;
 use Route;
@@ -62,6 +63,7 @@ class CheckPermissionMiddleware
             $newPermssion = $this->createPermission($permission);
 
             if ($isAdmin) {
+                $role = Role::where('slug', 'admin')->first();
                 $user->attachPermission($newPermssion);
                 setUserPermissions($user);
             }

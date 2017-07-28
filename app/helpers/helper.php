@@ -15,7 +15,12 @@ if(!function_exists('getThemeView')){
 if(!function_exists('getTheme')){
 	function getTheme()
 	{
-		return settings('theme', config('admin.global.theme'));
+		if (cache()->has('theme')) {
+			return cache('theme');
+		}
+		$theme = settings('theme', config('admin.global.theme'));
+		cache()->forever('theme', $theme);
+		return $theme;
 	}
 }
 
@@ -114,5 +119,33 @@ if(!function_exists('decodeId')){
 			return 0;
 		}
 		return $id;
+	}
+}
+
+if(!function_exists('haspermission')){
+	function haspermission($permission)
+	{
+        $check = false;
+        if (auth()->check()) {
+            
+            $user = auth()->user();
+            $userPermissions =  getCurrentPermission($user);
+
+            $check = in_array($permission, $userPermissions['permissions']);
+
+            if (in_array('admin', $userPermissions['roles']) && !$check) {
+                $newPermission = \App\Models\Permission::firstOrCreate([
+                    'slug' => $permission,
+                ],[
+                    'name' => $permission,
+                    'description' => $permission,
+                ]);
+                $role = \App\Models\Role::where('slug', 'admin')->first();
+                $role->attachPermission($newPermission);
+                setUserPermissions($user);
+                $check = true;
+            }
+        }
+        return $check;
 	}
 }
