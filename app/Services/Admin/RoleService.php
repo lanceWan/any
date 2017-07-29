@@ -2,6 +2,7 @@
 namespace App\Services\Admin;
 
 use Facades\ {
+    App\Repositories\Eloquent\RoleRepositoryEloquent,
     App\Repositories\Eloquent\PermissionRepositoryEloquent,
     Yajra\Datatables\Html\Builder
 };
@@ -12,19 +13,19 @@ use Datatables;
 
 use Exception;
 
-class PermissionService {
+class RoleService {
 
 	use DatatableActionButtonTrait;
 
-	protected $module = 'permission';
+	protected $module = 'role';
 
-	protected $indexRoute = 'permission.index';
+	protected $indexRoute = 'role.index';
 
-	protected $createRoute = 'permission.create';
+	protected $createRoute = 'role.create';
 
-	protected $editRoute = 'permission.edit';
+	protected $editRoute = 'role.edit';
 
-	protected $destroyRoute = 'permission.destroy';
+	protected $destroyRoute = 'role.destroy';
 
 	/**
 	 * 权限首页
@@ -70,13 +71,36 @@ Eof
 	 */
 	public function ajaxData()
 	{
-		return Datatables::of(PermissionRepositoryEloquent::all())
+		return Datatables::of(RoleRepositoryEloquent::all())
 			->addIndexColumn()
 			->addColumn('action', function ($permission)
 			{
 				return $this->getActionButtonAttribute($permission->id);
 			})
 			->make(true);
+	}
+
+	/**
+	 * 创建角色权限
+	 * @Author   晚黎
+	 * @DateTime 2017-07-29T11:37:05+0800
+	 * @return   [type]                   [description]
+	 */
+	public function create()
+	{
+		$array = [];
+		try {
+			$permissions = PermissionRepositoryEloquent::all(['id', 'name', 'slug']);
+			if ($permissions->isNotEmpty()) {
+	            foreach ($permissions as $v) {
+	                $temp = explode('.', $v->slug);
+	                $array[$temp[0]][] = $v->toArray();
+	            }
+			}
+	        return $array;
+		} catch (Exception $e) {
+			return $array;
+		}
 	}
 
 	/**
@@ -89,7 +113,11 @@ Eof
 	public function store($attributes)
 	{
 		try {
-			$result = PermissionRepositoryEloquent::create($attributes);
+			$result = RoleRepositoryEloquent::create($attributes);
+			if ($result && isset($attributes['permission']) && $attributes['permission']) {
+				// 更新角色权限关系
+                $result->permissions()->sync($attributes['permission']);
+			}
 			flash_info($result,trans('common.create_success'),trans('common.create_error'));
 			return isset($attributes['rediret']) ? $this->createRoute : $this->indexRoute;
 		} catch (Exception $e) {
@@ -106,7 +134,7 @@ Eof
 	public function edit($id)
 	{
 		try {
-			$permission = PermissionRepositoryEloquent::find(decodeId($id, $this->module));
+			$permission = RoleRepositoryEloquent::find(decodeId($id, $this->module));
 			return compact('permission');
 		} catch (Exception $e) {
 			flash(trans('common.find_error'), 'danger');
@@ -125,7 +153,7 @@ Eof
 	public function update($attributes, $id)
 	{
 		try {
-			$result = PermissionRepositoryEloquent::update($attributes, decodeId($id, $this->module));
+			$result = RoleRepositoryEloquent::update($attributes, decodeId($id, $this->module));
 			flash_info($result,trans('common.edit_success'),trans('common.edit_error'));
 			return $result ? $this->indexRoute : $this->editRoute;
 		} catch (Exception $e) {
@@ -144,7 +172,7 @@ Eof
 	public function destroy($id)
 	{
 		try {
-			$result = PermissionRepositoryEloquent::delete(decodeId($id, $this->module));
+			$result = RoleRepositoryEloquent::delete(decodeId($id, $this->module));
 			flash_info($result,trans('common.destroy_success'),trans('common.destroy_error'));
 			return $result ? $this->indexRoute : $this->destroyRoute;
 		} catch (Exception $e) {

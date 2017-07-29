@@ -27,4 +27,6 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => ['auth
 	// require(__DIR__ . '/admin/permission.php');
 	$router->resource('permission','PermissionController');
 
+	$router->resource('role','RoleController');
+
 });
