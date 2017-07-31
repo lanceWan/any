@@ -146,10 +146,8 @@ Eof
 		try {
 			$result = PermissionRepositoryEloquent::delete(decodeId($id, $this->module));
 			flash_info($result,trans('common.destroy_success'),trans('common.destroy_error'));
-			return $result ? $this->indexRoute : $this->destroyRoute;
 		} catch (Exception $e) {
 			flash(trans('common.destroy_error'), 'danger');
-			return $this->destroyRoute;
 		}
 	}
 

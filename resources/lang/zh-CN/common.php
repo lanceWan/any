@@ -7,6 +7,7 @@ return [
 	'delete' => '删除',
 	'show' => '查看',
 	'cancel' => '返回',
+	'close' => '关闭',
 	'create_success' => '新增成功！',
 	'create_error' => '新增失败！',
 	'find_error' => '未找到数据！',

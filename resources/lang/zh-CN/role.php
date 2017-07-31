@@ -7,4 +7,6 @@ return array (
     'description' => '简介',
     'created_at' => '创建时间',
     'updated_at' => '修改时间',
+    'module' => '模块',
+    'permission' => '权限',
 );

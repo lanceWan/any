@@ -28,7 +28,7 @@ class RoleService {
 	protected $destroyRoute = 'role.destroy';
 
 	/**
-	 * 权限首页
+	 * 角色首页
 	 * @Author   晚黎
 	 * @DateTime 2017-07-26T22:42:27+0800
 	 * @return   [type]                   [description]
@@ -81,30 +81,50 @@ Eof
 	}
 
 	/**
-	 * 创建角色权限
+	 * 重写datatable action按钮
+	 * @author 晚黎
+	 * @date   2017-07-31T10:11:27+0800
+	 * @param  [type]                   $id [description]
+	 * @return [type]                       [description]
+	 */
+	public function getActionButtonAttribute($id)
+	{
+		return $this->getModalShowActionButtion($id).
+				$this->getEditActionButton($id).
+				$this->getDestroyActionButton($id);
+	}
+
+	/**
+	 * 创建角色角色
 	 * @Author   晚黎
 	 * @DateTime 2017-07-29T11:37:05+0800
 	 * @return   [type]                   [description]
 	 */
 	public function create()
 	{
+		return $this->getAllPermissions();
+	}
+	/**
+	 * 获取所有角色
+	 * @author 晚黎
+	 * @date   2017-07-31T09:50:40+0800
+	 * @return [type]                   [description]
+	 */
+	public function getAllPermissions()
+	{
 		$array = [];
-		try {
-			$permissions = PermissionRepositoryEloquent::all(['id', 'name', 'slug']);
-			if ($permissions->isNotEmpty()) {
-	            foreach ($permissions as $v) {
-	                $temp = explode('.', $v->slug);
-	                $array[$temp[0]][] = $v->toArray();
-	            }
-			}
-	        return $array;
-		} catch (Exception $e) {
-			return $array;
+		$permissions = PermissionRepositoryEloquent::all(['id', 'name', 'slug']);
+		if ($permissions->isNotEmpty()) {
+            foreach ($permissions as $v) {
+                $temp = explode('.', $v->slug);
+                $array[$temp[0]][] = $v->toArray();
+            }
 		}
+        return $array;
 	}
 
 	/**
-	 * 添加权限
+	 * 添加角色
 	 * @Author   晚黎
 	 * @DateTime 2017-07-26T22:42:59+0800
 	 * @param    [type]                   $attributes [description]
@@ -124,8 +144,28 @@ Eof
 			return $this->createRoute;
 		}
 	}
+
 	/**
-	 * 修改权限
+	 * 查看
+	 * @author 晚黎
+	 * @date   2017-07-31T10:20:49+0800
+	 * @param  [type]                   $id [description]
+	 * @return [type]                       [description]
+	 */
+	public function show($id)
+	{
+		try {
+			$role = RoleRepositoryEloquent::with('permissions')->find(decodeId($id, $this->module));
+			return compact('role');
+		} catch (Exception $e) {
+			flash(trans('common.find_error'), 'danger');
+			return redirect()->route($this->indexRoute);
+		}
+	}
+
+
+	/**
+	 * 修改角色
 	 * @author 晚黎
 	 * @date   2017-07-27T10:44:41+0800
 	 * @param  [type]                   $id [description]
@@ -134,8 +174,9 @@ Eof
 	public function edit($id)
 	{
 		try {
-			$permission = RoleRepositoryEloquent::find(decodeId($id, $this->module));
-			return compact('permission');
+			$role = RoleRepositoryEloquent::with('permissions')->find(decodeId($id, $this->module));
+			$permissions = $this->getAllPermissions();
+			return compact('role', 'permissions');
 		} catch (Exception $e) {
 			flash(trans('common.find_error'), 'danger');
 			return redirect()->route($this->indexRoute);
@@ -154,6 +195,14 @@ Eof
 	{
 		try {
 			$result = RoleRepositoryEloquent::update($attributes, decodeId($id, $this->module));
+			if ($result) {
+				// 更新角色权限关系
+				if (isset($attributes['permission'])) {
+					$result->permissions()->sync($attributes['permission']);
+				}else{
+					$result->permissions()->sync([]);
+				}
+			}
 			flash_info($result,trans('common.edit_success'),trans('common.edit_error'));
 			return $result ? $this->indexRoute : $this->editRoute;
 		} catch (Exception $e) {
@@ -174,10 +223,8 @@ Eof
 		try {
 			$result = RoleRepositoryEloquent::delete(decodeId($id, $this->module));
 			flash_info($result,trans('common.destroy_success'),trans('common.destroy_error'));
-			return $result ? $this->indexRoute : $this->destroyRoute;
 		} catch (Exception $e) {
 			flash(trans('common.destroy_error'), 'danger');
-			return $this->destroyRoute;
 		}
 	}
 

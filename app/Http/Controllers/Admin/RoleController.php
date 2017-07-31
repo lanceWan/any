@@ -58,7 +58,8 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        //
+        $result = $this->service->show($id);
+        return view(getThemeView('role.show'))->with($result);
     }
 
     /**
@@ -69,7 +70,8 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $result = $this->service->edit($id);
+        return view(getThemeView('role.edit'))->with($result);
     }
 
     /**
@@ -81,7 +83,8 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $route = $this->service->update($request->all(), $id);
+        return redirect()->route($route);
     }
 
     /**
@@ -92,6 +95,7 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->service->destroy($id);
+        return redirect()->route('role.index');
     }
 }

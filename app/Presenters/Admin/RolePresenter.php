@@ -60,4 +60,40 @@ Eof;
 		}
 		return '';
 	}
+
+	/**
+	 * 查看用户角色权限时展示的table
+	 * @author 晚黎
+	 * @date   2017-07-31T10:25:27+0800
+	 * @param  [type]                   $rolePermissions [description]
+	 * @return [type]                                    [description]
+	 */
+	public function showRolePermissions($rolePermissions)
+	{
+		$html = '';
+		if (!$rolePermissions->isEmpty()) {
+			// 将角色权限分组
+			$permissionArray = [];
+			 foreach ($rolePermissions as $v) {
+                $temp = explode('.', $v->slug);
+                $permissionArray[$temp[0]][] = $v->toArray();
+            }
+			if ($permissionArray) {
+				foreach ($permissionArray as $key => $permission) {
+					$html .= "<tr><td>".$key."</td><td>";
+					if (is_array($permission)) {
+						foreach ($permission as $k => $v) {
+							$html .= <<<Eof
+							<div class="col-md-4">
+	                        	<label> {$v['name']} </label>
+	                      	</div>
+Eof;
+						}
+					}
+					$html .= '</td></tr>';
+				}
+			}
+		}
+		return $html;
+	}
 }

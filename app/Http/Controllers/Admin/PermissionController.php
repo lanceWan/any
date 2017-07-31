@@ -92,7 +92,7 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        $route = $this->service->destroy($id);
-        return redirect()->route($route);
+        $this->service->destroy($id);
+        redirect()->route('permission.index');
     }
 }
