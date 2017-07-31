@@ -4,9 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Services\Admin\MenuService;
+use App\Http\Requests\MenuRequest;
 class MenuController extends Controller
 {
+
+    protected $service;
+
+    public function __construct(MenuService $service)
+    {
+        $this->service = $service;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        //
+        $result = $this->service->index();
+        return view(getThemeView('menu.list'))->with($result);
     }
 
     /**

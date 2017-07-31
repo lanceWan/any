@@ -15,5 +15,8 @@ return [
 		'permission' => true,
 		'role' => true,
 		'user' => false,
+	],
+	'cache' => [
+		'menuList' => 'menuList'
 	]
 ];

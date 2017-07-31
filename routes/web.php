@@ -30,5 +30,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => ['auth
 	$router->resource('role','RoleController');
 	// 用户
 	$router->resource('user','UserController');
+	// 菜单
+	$router->resource('menu','MenuController');
 
 });
