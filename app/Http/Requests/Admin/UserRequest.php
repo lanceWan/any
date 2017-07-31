@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-class PermissionRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,15 @@ class PermissionRequest extends FormRequest
     public function rules()
     {
         $rules['name'] = 'required';
-        // 添加权限
+        // 添加用户
         if (request()->isMethod('POST')) {
-            $rules['slug'] = 'required|unique:permissions,slug';
+            $rules['password'] = 'required';
+            $rules['username'] = 'required|unique:users,username';
         }else{
             // 修改时 request()->method() 方法返回的是 PUT或PATCH
-            $rules['slug'] = [
+            $rules['username'] = [
                 'required',
-                Rule::unique('permissions')->ignore(decodeId(request()->route('permission'), 'permission')),
+                Rule::unique('users')->ignore(decodeId(request()->route('user'), 'user')),
             ];
         }
         return $rules;
@@ -60,8 +61,9 @@ class PermissionRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name'  => trans('permission.name'),
-            'slug'  => trans('permission.slug'),
+            'name'  => trans('user.name'),
+            'username'  => trans('user.username'),
+            'password'  => trans('user.password'),
         ];
     }
 }

@@ -127,10 +127,10 @@ Eof
 		try {
 			$result = PermissionRepositoryEloquent::update($attributes, decodeId($id, $this->module));
 			flash_info($result,trans('common.edit_success'),trans('common.edit_error'));
-			return $result ? $this->indexRoute : $this->editRoute;
+			return $this->indexRoute;
 		} catch (Exception $e) {
 			flash(trans('common.edit_error'), 'danger');
-			return $this->editRoute;
+			return $this->indexRoute;
 		}
 	}
 

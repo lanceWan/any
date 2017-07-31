@@ -108,5 +108,5 @@
 @endsection
 @section('js')
 <script type="text/javascript" src="{{asset(getThemeAssets('iCheck/icheck.min.js', true))}}"></script>
-<script type="text/javascript" src="{{asset(getThemeAssets('js/role.js'))}}"></script>
+<script type="text/javascript" src="{{asset(getThemeAssets('js/check.js'))}}"></script>
 @endsection

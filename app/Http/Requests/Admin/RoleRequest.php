@@ -24,7 +24,7 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         $rules['name'] = 'required';
-        // 添加权限
+        // 添加角色
         if (request()->isMethod('POST')) {
             $rules['slug'] = 'required|unique:roles,slug';
         }else{
@@ -60,7 +60,6 @@ class RoleRequest extends FormRequest
     public function attributes()
     {
         return [
-            'id'    => trans('role.id'),
             'name'  => trans('role.name'),
             'slug'  => trans('role.slug'),
         ];

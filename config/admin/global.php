@@ -14,6 +14,6 @@ return [
 		'main' => true,
 		'permission' => true,
 		'role' => true,
-		'user' => true,
+		'user' => false,
 	]
 ];

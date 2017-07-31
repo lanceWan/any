@@ -2,6 +2,7 @@
 namespace App\Services\Admin;
 
 use Facades\ {
+    App\Repositories\Eloquent\UserRepositoryEloquent,
     App\Repositories\Eloquent\RoleRepositoryEloquent,
     App\Repositories\Eloquent\PermissionRepositoryEloquent,
     Yajra\Datatables\Html\Builder
@@ -13,22 +14,24 @@ use Datatables;
 
 use Exception;
 
-class RoleService {
+class UserService {
 
 	use DatatableActionButtonTrait;
 
-	protected $module = 'role';
+	protected $module = 'user';
 
-	protected $indexRoute = 'role.index';
+	protected $indexRoute = 'user.index';
 
-	protected $createRoute = 'role.create';
+	protected $createRoute = 'user.create';
 
-	protected $editRoute = 'role.edit';
+	protected $showRoute = 'user.show';
 
-	protected $destroyRoute = 'role.destroy';
+	protected $editRoute = 'user.edit';
+
+	protected $destroyRoute = 'user.destroy';
 
 	/**
-	 * 角色首页
+	 * 首页
 	 * @Author   晚黎
 	 * @DateTime 2017-07-26T22:42:27+0800
 	 * @return   [type]                   [description]
@@ -53,11 +56,11 @@ class RoleService {
 			        },
 Eof
 			])->addIndex(['data' => 'DT_Row_Index', 'name' => 'DT_Row_Index', 'title' => trans('common.number')])
-			->addColumn(['data' => 'name', 'name' => 'name', 'title' => trans('permission.name')])
-	        ->addColumn(['data' => 'slug', 'name' => 'slug', 'title' => trans('permission.slug')])
-	        ->addColumn(['data' => 'description', 'name' => 'description', 'title' => trans('permission.description')])
-	        ->addColumn(['data' => 'created_at', 'name' => 'created_at', 'title' => trans('permission.created_at')])
-	        ->addColumn(['data' => 'updated_at', 'name' => 'updated_at', 'title' => trans('permission.updated_at')])
+			->addColumn(['data' => 'name', 'name' => 'name', 'title' => trans('user.name')])
+	        ->addColumn(['data' => 'username', 'name' => 'username', 'title' => trans('user.username')])
+	        ->addColumn(['data' => 'email', 'name' => 'email', 'title' => trans('user.email')])
+	        ->addColumn(['data' => 'created_at', 'name' => 'created_at', 'title' => trans('user.created_at')])
+	        ->addColumn(['data' => 'updated_at', 'name' => 'updated_at', 'title' => trans('user.updated_at')])
 	        ->addAction(['data' => 'action', 'name' => 'action', 'title' => trans('common.action')]);
 
         return compact('html');
@@ -71,7 +74,7 @@ Eof
 	 */
 	public function ajaxData()
 	{
-		return Datatables::of(RoleRepositoryEloquent::all())
+		return Datatables::of(UserRepositoryEloquent::all())
 			->addIndexColumn()
 			->addColumn('action', function ($permission)
 			{
@@ -89,23 +92,25 @@ Eof
 	 */
 	public function getActionButtonAttribute($id)
 	{
-		return $this->getModalShowActionButtion($id).
+		return $this->getShowActionButtion($id).
 				$this->getEditActionButton($id).
 				$this->getDestroyActionButton($id);
 	}
 
 	/**
-	 * 创建角色
+	 * 创建
 	 * @Author   晚黎
 	 * @DateTime 2017-07-29T11:37:05+0800
 	 * @return   [type]                   [description]
 	 */
 	public function create()
 	{
-		return $this->getAllPermissions();
+		$permissions = $this->getAllPermissions();
+		$roles = $this->getAllRole();
+		return compact('permissions', 'roles');
 	}
 	/**
-	 * 获取所有角色
+	 * 获取所有权限
 	 * @author 晚黎
 	 * @date   2017-07-31T09:50:40+0800
 	 * @return [type]                   [description]
@@ -124,6 +129,17 @@ Eof
 	}
 
 	/**
+	 * 获取所有角色
+	 * @author 晚黎
+	 * @date   2017-07-31T10:56:22+0800
+	 * @return [type]                   [description]
+	 */
+	private function getAllRole()
+	{
+		return RoleRepositoryEloquent::all(['id', 'name']);
+	}
+
+	/**
 	 * 添加角色
 	 * @Author   晚黎
 	 * @DateTime 2017-07-26T22:42:59+0800
@@ -133,14 +149,22 @@ Eof
 	public function store($attributes)
 	{
 		try {
-			$result = RoleRepositoryEloquent::create($attributes);
-			if ($result && isset($attributes['permission']) && $attributes['permission']) {
-				// 更新角色权限关系
-                $result->permissions()->sync($attributes['permission']);
+			$attributes['password'] = bcrypt($attributes['password']);
+			$result = UserRepositoryEloquent::create($attributes);
+			if ($result) {
+				// 角色与用户关系
+				if (isset($attributes['role']) && $attributes['role']) {
+					$result->roles()->sync($attributes['role']);
+				}
+				// 权限与用户关系
+				if (isset($attributes['permission']) && $attributes['permission']) {
+					$result->userPermissions()->sync($attributes['permission']);
+				}
 			}
 			flash_info($result,trans('common.create_success'),trans('common.create_error'));
 			return isset($attributes['rediret']) ? $this->createRoute : $this->indexRoute;
 		} catch (Exception $e) {
+			flash(trans('common.create_error'), 'danger');
 			return $this->createRoute;
 		}
 	}
@@ -155,8 +179,10 @@ Eof
 	public function show($id)
 	{
 		try {
-			$role = RoleRepositoryEloquent::with('permissions')->find(decodeId($id, $this->module));
-			return compact('role');
+			$user = UserRepositoryEloquent::with(['userPermissions', 'roles'])->find(decodeId($id, $this->module));
+			$permissions = $this->getAllPermissions();
+			$roles = $this->getAllRole();
+			return compact('user', 'permissions', 'roles');
 		} catch (Exception $e) {
 			flash(trans('common.find_error'), 'danger');
 			return redirect()->route($this->indexRoute);
@@ -174,9 +200,10 @@ Eof
 	public function edit($id)
 	{
 		try {
-			$role = RoleRepositoryEloquent::with('permissions')->find(decodeId($id, $this->module));
+			$user = UserRepositoryEloquent::with(['userPermissions', 'roles'])->find(decodeId($id, $this->module));
 			$permissions = $this->getAllPermissions();
-			return compact('role', 'permissions');
+			$roles = $this->getAllRole();
+			return compact('user', 'permissions', 'roles');
 		} catch (Exception $e) {
 			flash(trans('common.find_error'), 'danger');
 			return redirect()->route($this->indexRoute);
@@ -194,13 +221,25 @@ Eof
 	public function update($attributes, $id)
 	{
 		try {
-			$result = RoleRepositoryEloquent::update($attributes, decodeId($id, $this->module));
+			// 修改密码
+			if ($attributes['password']) {
+				$attributes['password'] = bcrypt($attributes['password']);
+			}else{
+				unset($attributes['password']);
+			}
+			$result = UserRepositoryEloquent::update($attributes, decodeId($id, $this->module));
 			if ($result) {
-				// 更新角色权限关系
-				if (isset($attributes['permission'])) {
-					$result->permissions()->sync($attributes['permission']);
+				// 更新用户角色关系
+				if (isset($attributes['role']) && $attributes['role']) {
+					$result->roles()->sync($attributes['role']);
 				}else{
-					$result->permissions()->sync([]);
+					$result->roles()->sync([]);
+				}
+				// 更新用户权限关系
+				if (isset($attributes['permission']) && $attributes['permission']) {
+					$result->userPermissions()->sync($attributes['permission']);
+				}else{
+					$result->userPermissions()->sync([]);
 				}
 			}
 			flash_info($result,trans('common.edit_success'),trans('common.edit_error'));
@@ -221,7 +260,7 @@ Eof
 	public function destroy($id)
 	{
 		try {
-			$result = RoleRepositoryEloquent::delete(decodeId($id, $this->module));
+			$result = UserRepositoryEloquent::delete(decodeId($id, $this->module));
 			flash_info($result,trans('common.destroy_success'),trans('common.destroy_error'));
 		} catch (Exception $e) {
 			flash(trans('common.destroy_error'), 'danger');

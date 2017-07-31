@@ -74,7 +74,7 @@ Eof;
 		if (!$rolePermissions->isEmpty()) {
 			// 将角色权限分组
 			$permissionArray = [];
-			 foreach ($rolePermissions as $v) {
+			foreach ($rolePermissions as $v) {
                 $temp = explode('.', $v->slug);
                 $permissionArray[$temp[0]][] = $v->toArray();
             }

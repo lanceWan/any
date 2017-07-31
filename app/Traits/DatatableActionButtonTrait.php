@@ -68,6 +68,21 @@ Eof;
 	}
 
 	/**
+	 * 超链接查看按钮
+	 * @author 晚黎
+	 * @date   2017-07-31T10:49:41+0800
+	 * @param  [type]                   $id [description]
+	 * @return [type]                       [description]
+	 */
+	private function getShowActionButtion($id)
+	{
+		if (haspermission($this->module.'controller.show')) {
+			return '<a href="'.route($this->module.'.show', [encodeId($id, $this->module)]).'" class="btn btn-xs btn-info tooltips" data-original-title="' . trans('common.show') . '"  data-placement="top"><i class="fa fa-eye"></i></a> ';
+		}
+		return '';
+	}
+
+	/**
 	 * 默认显示编辑和删除，如果需要查看再相应service进行重写
 	 * @author 晚黎
 	 * @date   2017-07-31T10:07:51+0800
