@@ -22,8 +22,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $result = $this->service->index();
-        return view(getThemeView('menu.list'))->with($result);
+        $menus = $this->service->getMenuList();
+        return view(getThemeView('menu.list'))->with(compact('menus'));
     }
 
     /**
@@ -33,7 +33,8 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        $result = $this->service->create();
+        return view(getThemeView('menu.create'))->with($result);
     }
 
     /**

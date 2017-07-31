@@ -98,11 +98,11 @@ Eof;
 	 */
 	public function canCreateMenu()
 	{
-		$canCreateMenu = auth()->user()->can(config('admin.permissions.menu.create'));
+		$canCreateMenu = hasPermission('permissioncontroller.create');
 
-		$title = $canCreateMenu ?  trans('admin/menu.welcome'):trans('admin/menu.sorry');
-		$desc = $canCreateMenu ? trans('admin/menu.description'):trans('admin/menu.description_sorry');
-		$createButton = $canCreateMenu ? '<br><a href="javascript:;" class="btn btn-primary m-t create_menu">'.trans('admin/menu.action.create').'</a>':'';
+		$title = $canCreateMenu ?  trans('menu.welcome'):trans('menu.sorry');
+		$desc = $canCreateMenu ? trans('menu.description'):trans('menu.description_sorry');
+		$createButton = $canCreateMenu ? '<br><a href="javascript:;" class="btn btn-primary m-t create_menu">'.trans('menu.create').'</a>':'';
 		return <<<Eof
 		<div class="middle-box text-center animated fadeInRightBig">
             <h3 class="font-bold">{$title}</h3>
@@ -122,7 +122,7 @@ Eof;
 	 */
 	public function topMenuList($menus,$pid = '')
 	{
-		$html = '<option value="0">'.trans('admin/menu.topMenu').'</option>';
+		$html = '<option value="0">'.trans('menu.topMenu').'</option>';
 		if ($menus) {
 			foreach ($menus as $v) {
 				$html .= '<option value="'.$v['id'].'" '.$this->checkMenu($v['id'],$pid).'>'.$v['name'].'</option>';
@@ -213,5 +213,16 @@ Eof;
 			}
 		}
 		return $html;
+	}
+
+	public function permissionList($permissions)
+	{
+		$str = '';
+		if ($permissions->isNotEmpty()) {
+			foreach ($permissions as $v) {
+				$str .= "<option value='{$v->name}'>{$v->name}</option>";
+			}
+		}
+		return $str;
 	}
 }

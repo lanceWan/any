@@ -2,7 +2,8 @@
 namespace App\Services\Admin;
 
 use Facades\ {
-    App\Repositories\Eloquent\MenuRepositoryEloquent
+    App\Repositories\Eloquent\MenuRepositoryEloquent,
+    App\Repositories\Eloquent\PermissionRepositoryEloquent
 };
 
 use Exception;
@@ -27,14 +28,13 @@ class MenuService {
 	 * @DateTime 2017-07-31T21:44:41+0800
 	 * @return   [type]                   [description]
 	 */
-	public function index()
+	public function getMenuList()
 	{
 		// 判断数据是否缓存
 		if (cache()->has(config('admin.global.cache.menuList'))) {
-			$menus =  cache()->get(config('admin.global.cache.menuList'));
+			return cache()->get(config('admin.global.cache.menuList'));
 		}
-		$menus = $this->sortMenuSetCache();
-		return compact('menus');
+		return $this->sortMenuSetCache();
 	}
 
 	/**
@@ -83,6 +83,19 @@ class MenuService {
 			
 		}
 		return '';
+	}
+
+	/**
+	 * 添加菜单视图
+	 * @Author   晚黎
+	 * @DateTime 2017-07-31T22:53:43+0800
+	 * @return   [type]                   [description]
+	 */
+	public function create()
+	{
+		$menus = $this->getMenuList();
+		$permissions = PermissionRepositoryEloquent::all(['name']);
+		return compact('menus', 'permissions');
 	}
 
 }
