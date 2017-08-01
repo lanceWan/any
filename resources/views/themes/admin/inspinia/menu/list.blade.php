@@ -2,6 +2,8 @@
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{asset(getThemeAssets('nestable/nestable.css', true))}}">
 <link rel="stylesheet" type="text/css" href="{{asset(getThemeAssets('bootstrap-select/bootstrap-select.min.css', true))}}">
+<link href="{{asset(getThemeAssets('ionRangeSlider/ion.rangeSlider.css', true))}}" rel="stylesheet">
+<link href="{{asset(getThemeAssets('ionRangeSlider/ion.rangeSlider.skinFlat.css', true))}}" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{{asset(getThemeAssets('ladda/ladda-themeless.min.css', true))}}">
 @endsection
 @section('content')
@@ -20,9 +22,11 @@
   </div>
   <div class="col-lg-2">
     <div class="title-action">
-      <a href="#" class="btn btn-info"><i class="fa fa-cancel"></i> 
+      @if(hasPermission('menucontroller.cacheclear'))
+      <a href="{{url('admin/menu/clear')}}" class="btn btn-info"><i class="fa fa-cancel"></i> 
         {{trans('menu.cache_clear')}}
       </a>
+      @endif
     </div>
   </div>
 </div>
@@ -52,6 +56,7 @@
 @section('js')
 <script src="{{asset(getThemeAssets('nestable/jquery.nestable.js', true))}}"></script>
 <script src="{{asset(getThemeAssets('bootstrap-select/bootstrap-select.min.js', true))}}"></script>
+<script src="{{asset(getThemeAssets('ionRangeSlider/ion.rangeSlider.min.js', true))}}"></script>
 <script src="{{asset(getThemeAssets('ladda/spin.min.js', true))}}"></script>
 <script src="{{asset(getThemeAssets('ladda/ladda.min.js', true))}}"></script>
 <script src="{{asset(getThemeAssets('ladda/ladda.jquery.min.js', true))}}"></script>
@@ -60,9 +65,9 @@
 <script type="text/javascript">
   $('#nestable').on('click','.destroy_item',function() {
     var _item = $(this);
-    var title = "{{trans('admin/alert.deleteTitle')}}";
+    var title = "{{trans('common.deleteTitle').trans('menu.desc')}}？";
     layer.confirm(title, {
-      btn: ['{{trans('admin/action.actionButton.destroy')}}', '{{trans('admin/action.actionButton.no')}}'],
+      btn: ['{{trans('common.yes')}}', '{{trans('common.no')}}'],
       icon: 5
     },function(index){
       _item.children('form').submit();

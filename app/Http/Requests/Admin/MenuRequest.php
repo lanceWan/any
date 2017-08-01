@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+
 class MenuRequest extends FormRequest
 {
     /**
@@ -23,19 +23,16 @@ class MenuRequest extends FormRequest
      */
     public function rules()
     {
-        $rules['name'] = 'required';
-        // 添加用户
-        if (request()->isMethod('POST')) {
-            $rules['password'] = 'required';
-            $rules['username'] = 'required|unique:users,username';
-        }else{
-            // 修改时 request()->method() 方法返回的是 PUT或PATCH
-            $rules['username'] = [
-                'required',
-                Rule::unique('users')->ignore(decodeId(request()->route('user'), 'user')),
-            ];
+        $rule =  [
+            'name' => 'required',
+            'pid' => 'required',
+            'slug' => 'required',
+        ];
+
+        if ($this->pid) {
+            $rule['url'] = 'required';
         }
-        return $rules;
+        return rule;
     }
 
     /**
@@ -48,7 +45,6 @@ class MenuRequest extends FormRequest
     {
         return [
             'required'  => trans('validation.required'),
-            'unique'    => trans('validation.unique'),
         ];
     }
     
@@ -61,9 +57,10 @@ class MenuRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name'  => trans('user.name'),
-            'username'  => trans('user.username'),
-            'password'  => trans('user.password'),
+            'name'  => trans('menu.name'),
+            'pid'  => trans('menu.pid'),
+            'slug'  => trans('menu.slug'),
+            'url'  => trans('menu.url'),
         ];
     }
 }

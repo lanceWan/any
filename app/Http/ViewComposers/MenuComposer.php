@@ -1,21 +1,21 @@
 <?php
 namespace App\Http\ViewComposers;
 use Illuminate\View\View;
-use App\Service\Admin\MenuService;
+use App\Services\Admin\MenuService;
 class MenuComposer
 {
     
-    protected $menu;
+    protected $service;
 
     
-    public function __construct(MenuService $menu)
+    public function __construct(MenuService $service)
     {
-        $this->menu = $menu;
+        $this->service = $service;
     }
 
     
     public function compose(View $view)
     {
-        $view->with('sidebarMenu', $this->menu->getMenuList());
+        $view->with('sidebarMenu', $this->service->getMenuList());
     }
 }

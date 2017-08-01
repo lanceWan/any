@@ -24,14 +24,15 @@ class MenuPresenter
 	 */
 	protected function getNestableItem($menu)
 	{
+		$icon = $menu['icon'] ? '<i class="'.$menu['icon'].'"></i>' : '';
 		if ($menu['child']) {
-			return $this->getHandleList($menu['id'],$menu['name'],$menu['icon'],$menu['child']);
+			return $this->getHandleList($menu['id'],$menu['name'],$icon,$menu['child']);
 		}
 		$labelInfo = $menu['pid'] == 0 ?  'label-info':'label-warning';
 		return <<<Eof
 				<li class="dd-item dd3-item" data-id="{$menu['id']}">
                     <div class="dd-handle dd3-handle">Drag</div>
-                    <div class="dd3-content"><span class="label {$labelInfo}"><i class="{$menu['icon']}"></i></span> {$menu['name']} {$this->getActionButtons($menu['id'])}</div>
+                    <div class="dd3-content"><span class="label {$labelInfo}">{$icon}</span> {$menu['name']} {$this->getActionButtons($menu['id'])}</div>
                 </li>
 Eof;
 	}
@@ -57,7 +58,7 @@ Eof;
 		<li class="dd-item dd3-item" data-id="{$id}">
             <div class="dd-handle dd3-handle">Drag</div>
             <div class="dd3-content">
-            	<span class="label label-info"><i class="{$icon}"></i></span> {$name} {$this->getActionButtons($id)}
+            	<span class="label label-info">{$icon}</span> {$name} {$this->getActionButtons($id)}
             </div>
             <ol class="dd-list">
                 {$handle}
@@ -70,22 +71,22 @@ Eof;
 	/**
 	 * 菜单按钮
 	 * @author 晚黎
-	 * @date   2016-11-04T11:05:38+0800
-	 * @param  [type]                   $id   [description]
-	 * @param  boolean                  $bool [description]
-	 * @return [type]                         [description]
+	 * @date   2017-08-01T10:02:36+0800
+	 * @param  [type]                   $id [description]
+	 * @return [type]                       [description]
 	 */
 	protected function getActionButtons($id)
 	{
 		$action = '<div class="pull-right">';
-		if (auth()->user()->can(config('admin.permissions.menu.show'))) {
-			$action .= '<a href="javascript:;" class="btn btn-xs tooltips showInfo" data-href="'.url('admin/menu',[$id]).'" data-toggle="tooltip" data-original-title="'.trans('admin/action.actionButton.show').'"  data-placement="top"><i class="fa fa-eye"></i></a>';
+		$encodeId =  [encodeId($id, 'menu')];
+		if (hasPermission('menucontroller.show')) {
+			$action .= '<a href="javascript:;" class="btn btn-xs tooltips showInfo" data-href="'.route('menu.show',  $encodeId).'" data-toggle="tooltip" data-original-title="'.trans('common.show').'"  data-placement="top"><i class="fa fa-eye"></i></a>';
 		}
-		if (auth()->user()->can(config('admin.permissions.menu.edit'))) {
-			$action .= '<a href="javascript:;" data-href="'.url('admin/menu/'.$id.'/edit').'" class="btn btn-xs tooltips editMenu" data-toggle="tooltip"data-original-title="'.trans('admin/action.actionButton.edit').'"  data-placement="top"><i class="fa fa-edit"></i></a>';
+		if (hasPermission('menucontroller.edit')) {
+			$action .= '<a href="javascript:;" data-href="'.route('menu.edit', $encodeId).'" class="btn btn-xs tooltips editMenu" data-toggle="tooltip"data-original-title="'.trans('common.edit').'"  data-placement="top"><i class="fa fa-edit"></i></a>';
 		}
-		if (auth()->user()->can(config('admin.permissions.menu.destroy'))) {
-			$action .= '<a href="javascript:;" class="btn btn-xs tooltips destroy_item" data-id="'.$id.'" data-original-title="'.trans('admin/action.actionButton.destroy').'"data-toggle="tooltip"  data-placement="top"><i class="fa fa-trash"></i><form action="'.url('admin/menu',[$id]).'" method="POST" style="display:none"><input type="hidden"name="_method" value="delete"><input type="hidden" name="_token" value="'.csrf_token().'"></form></a>';
+		if (hasPermission('menucontroller.destroy')) {
+			$action .= '<a href="javascript:;" class="btn btn-xs tooltips destroy_item" data-id="'.$id.'" data-original-title="'.trans('common.delete').'"data-toggle="tooltip"  data-placement="top"><i class="fa fa-trash"></i><form action="'.route('menu.destroy',  $encodeId).'" method="POST" style="display:none"><input type="hidden"name="_method" value="delete"><input type="hidden" name="_token" value="'.csrf_token().'"></form></a>';
 		}
 		$action .= '</div>';
 		return $action;
@@ -175,7 +176,7 @@ Eof;
 		$html = '';
 		if ($sidebarMenus) {
 			foreach ($sidebarMenus as $menu) {
-				if (!auth()->user()->can($menu['slug'])) {
+				if (!hasPermission($menu['slug'])) {
 					continue;
 				}
 				if ($menu['child']) {
@@ -215,12 +216,12 @@ Eof;
 		return $html;
 	}
 
-	public function permissionList($permissions)
+	public function permissionList($permissions, $slug = '')
 	{
 		$str = '';
 		if ($permissions->isNotEmpty()) {
 			foreach ($permissions as $v) {
-				$str .= "<option value='{$v->name}'>{$v->name}</option>";
+				$str .= "<option value='{$v->name}' {$this->checkMenu($v->name,$slug)}>{$v->name}</option>";
 			}
 		}
 		return $str;

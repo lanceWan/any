@@ -1,7 +1,7 @@
 @inject('menuPresenter','App\Presenters\Admin\MenuPresenter')
 <div class="ibox float-e-margins animated bounceIn formBox" id="createBox">
   <div class="ibox-title">
-    <h5>{{trans('common.create').trans('menu.desc')}}</h5>
+    <h5>{{trans('common.edit').$menu->name.trans('menu.desc')}}</h5>
     <div class="ibox-tools">
       <a class="close-link">
           <i class="fa fa-times"></i>
@@ -9,20 +9,21 @@
     </div>
   </div>
   <div class="ibox-content">
-    <form method="post" action="{{route('menu.store')}}" class="form-horizontal" id="createForm">
+    <form method="post" action="{{route('menu.update', [encodeId($menu->id, 'menu')])}}" class="form-horizontal" id="editForm">
       {!!csrf_field()!!}
+      {{method_field('PUT')}}
       <div class="form-group">
         <label class="col-sm-2 control-label">{{trans('menu.name')}}</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" placeholder="{{trans('menu.name')}}" name="name">
+          <input type="text" class="form-control" value="{{$menu->name}}" name="name">
         </div>
       </div>
       <div class="hr-line-dashed"></div>
       <div class="form-group">
         <label class="col-sm-2 control-label">{{trans('menu.pid')}}</label>
         <div class="col-sm-10">
-          <select data-placeholder="{{trans('menu.pid')}}" data-live-search="true" class="selectpicker form-control" name="pid">
-            {!!$menuPresenter->topMenuList($menus)!!}
+          <select data-live-search="true" class="selectpicker form-control" name="pid">
+            {!!$menuPresenter->topMenuList($menus, $menu->pid)!!}
           </select>
         </div>
       </div>
@@ -30,7 +31,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">{{trans('menu.icon')}}</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" placeholder="{{trans('menu.icon')}}" value="" name="icon">
+          <input type="text" class="form-control" placeholder="{{trans('menu.icon')}}" value="{{$menu->icon}}" name="icon">
           <span class="help-block m-b-none">{!!trans('menu.moreIcon')!!}</span>
         </div>
       </div>
@@ -39,7 +40,7 @@
         <label class="col-sm-2 control-label">{{trans('menu.slug')}}</label>
         <div class="col-sm-10">
           <select data-placeholder="{{trans('menu.slug')}}" data-live-search="true" class="selectpicker form-control" name="slug">
-            {!!$menuPresenter->permissionList($permissions)!!}
+            {!!$menuPresenter->permissionList($permissions, $menu->slug)!!}
           </select>
         </div>
       </div>
@@ -47,21 +48,21 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">{{trans('menu.url')}}</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" placeholder="{{trans('menu.url')}}" value="" name="url">
+          <input type="text" class="form-control" placeholder="{{trans('menu.url')}}" value="{{$menu->url}}" name="url">
         </div>
       </div>
       <div class="hr-line-dashed"></div>
       <div class="form-group">
         <label class="col-sm-2 control-label">{{trans('menu.active')}}</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" placeholder="{{trans('menu.active')}}" value="" name="active">
+          <input type="text" class="form-control" placeholder="{{trans('menu.active')}}" value="{{$menu->active}}" name="active">
         </div>
       </div>
       <div class="hr-line-dashed"></div>
       <div class="form-group">
         <label class="col-sm-2 control-label">{{trans('menu.menu_description')}}</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" placeholder="{{trans('menu.menu_description')}}" value="" name="description">
+          <input type="text" class="form-control" placeholder="{{trans('menu.menu_description')}}" value="{{$menu->description}}" name="description">
         </div>
       </div>
       <div class="hr-line-dashed"></div>
@@ -75,7 +76,7 @@
       <div class="form-group">
           <div class="col-sm-4 col-sm-offset-2">
             <a class="btn btn-white close-link">{!!trans('common.close')!!}</a>
-            <button class="btn btn-primary createButton ladda-button"  data-style="zoom-in">{!!trans('menu.create')!!}</button>
+            <button class="btn btn-primary editButton ladda-button"  data-style="zoom-in">{!!trans('common.edit')!!}</button>
           </div>
       </div>
     </form>
@@ -87,6 +88,6 @@
       type: "single",
       min: 0,
       max: 100,
-      from: 0
+      from: "{{$menu->sort}}"
   });
 </script>

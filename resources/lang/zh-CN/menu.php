@@ -1,7 +1,7 @@
 <?php
 return [
 	'title' 		=> '菜单管理',
-	'desc' 			=> '菜单列表',
+	'desc' 			=> '菜单',
 	'id' 			=> 'ID',
 	'name' 			=> '菜单名称',
     'icon' 			=> '图标',

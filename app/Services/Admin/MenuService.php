@@ -12,16 +12,6 @@ class MenuService {
 
 	protected $module = 'menu';
 
-	protected $indexRoute = 'menu.index';
-
-	protected $createRoute = 'menu.create';
-
-	protected $showRoute = 'menu.show';
-
-	protected $editRoute = 'menu.edit';
-
-	protected $destroyRoute = 'menu.destroy';
-
 	/**
 	 * 获取菜单数据
 	 * @Author   晚黎
@@ -96,6 +86,114 @@ class MenuService {
 		$menus = $this->getMenuList();
 		$permissions = PermissionRepositoryEloquent::all(['name']);
 		return compact('menus', 'permissions');
+	}
+
+	/**
+	 * 添加数据
+	 * @author 晚黎
+	 * @date   2017-08-01T09:18:45+0800
+	 * @return [type]                   [description]
+	 */
+	public function store($attributes)
+	{
+		try {
+			$result = MenuRepositoryEloquent::create($attributes);
+			if ($result) {
+				// 更新缓存
+				$this->sortMenuSetCache();
+			}
+			return [
+				'status' => $result,
+				'message' => $result ? trans('common.create_success'):trans('common.create_error'),
+			];
+		} catch (Exception $e) {
+			dd($e);
+			return [
+				'status' => false,
+				'message' => trans('common.create_error'),
+			];
+		}
+	}
+
+	/**
+	 * 查看数据
+	 * @author 晚黎
+	 * @date   2017-08-01T10:37:41+0800
+	 * @param  [type]                   $id [description]
+	 * @return [type]                       [description]
+	 */
+	public function show($id)
+	{
+		try {
+			$menus = $this->getMenuList();
+			$menu = MenuRepositoryEloquent::find(decodeId($id, $this->module));
+			return compact('menus', 'menu');
+		} catch (Exception $e) {
+			abort(500);
+		}
+	}
+
+	public function edit($id)
+	{
+		try {
+			$attr = $this->show($id);
+			$permissions = PermissionRepositoryEloquent::all(['name']);
+			return array_merge($attr, compact('permissions'));
+		} catch (Exception $e) {
+			abort(500);
+		}
+	}
+
+	/**
+	 * 修改数据
+	 * @author 晚黎
+	 * @date   2017-08-01T10:37:50+0800
+	 * @param  [type]                   $id [description]
+	 * @return [type]                       [description]
+	 */
+	public function update($attributes, $id)
+	{
+		try {
+			$isUpdate = MenuRepositoryEloquent::update($attributes, decodeId($id, $this->module));
+			if ($isUpdate) {
+				// 更新缓存
+				$this->sortMenuSetCache();
+			}
+			return [
+				'status' => $isUpdate,
+				'message' => $isUpdate ? trans('common.edit_success'):trans('.common.edit_error'),
+			];
+		} catch (Exception $e) {
+			return [
+				'status' => false,
+				'message' => trans('common.edit_error'),
+			];
+		}
+	}
+	/**
+	 * 删除数据
+	 * @author 晚黎
+	 * @date   2017-08-01T11:02:01+0800
+	 * @param  string                   $value [description]
+	 * @return [type]                          [description]
+	 */
+	public function destroy($id)
+	{
+		try {
+			$result = MenuRepositoryEloquent::delete(decodeId($id, $this->module));
+			if ($result) {
+				$this->sortMenuSetCache();
+			}
+			flash_info($result,trans('common.destroy_success'),trans('common.destroy_error'));
+		} catch (Exception $e) {
+			flash(trans('common.destroy_error'), 'danger');
+		}
+	}
+
+	public function cacheClear()
+	{
+		cache()->forget(config('admin.global.cache.menuList'));
+		flash(trans('common.cache_clear'), 'success')->important();
 	}
 
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\MenuService;
-use App\Http\Requests\MenuRequest;
+use App\Http\Requests\Admin\MenuRequest;
 class MenuController extends Controller
 {
 
@@ -43,9 +43,10 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MenuRequest $request)
     {
-        //
+        $result = $this->service->store($request->all());
+        return response()->json($result);
     }
 
     /**
@@ -56,7 +57,8 @@ class MenuController extends Controller
      */
     public function show($id)
     {
-        //
+        $result = $this->service->show($id);
+        return view(getThemeView('menu.show'))->with($result);
     }
 
     /**
@@ -67,7 +69,8 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        //
+        $result = $this->service->edit($id);
+        return view(getThemeView('menu.edit'))->with($result);
     }
 
     /**
@@ -77,9 +80,10 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MenuRequest $request, $id)
     {
-        //
+        $result = $this->service->update($request->all(), $id);
+        return response()->json($result);
     }
 
     /**
@@ -90,6 +94,18 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->service->destroy($id);
+        return redirect()->route('menu.index');
+    }
+    /**
+     * 清除菜单缓存
+     * @author 晚黎
+     * @date   2017-08-01T11:03:45+0800
+     * @return [type]                   [description]
+     */
+    public function cacheClear()
+    {
+        $this->service->cacheClear();
+        return redirect()->route('menu.index');
     }
 }

@@ -31,6 +31,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => ['auth
 	// 用户
 	$router->resource('user','UserController');
 	// 菜单
+	$router->get('menu/clear','MenuController@cacheClear');
 	$router->resource('menu','MenuController');
 
 });

@@ -16,6 +16,8 @@
           </div>
       </li>
       
+      {!!$menuPresenter->sidebarMenuList($sidebarMenu)!!}
+      
     </ul>
   </div>
 </nav>
