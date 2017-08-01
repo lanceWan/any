@@ -94,9 +94,9 @@
             <div class="form-group">
               <div class="col-sm-4 col-sm-offset-2">
                   <a class="btn btn-white" href="{{route('role.index')}}">{!!trans('common.cancel')!!}</a>
-                  @haspermission('permissioncontroller.store')
+                  @if(haspermission('rolecontroller.store'))
                   <button class="btn btn-primary" type="submit">{!!trans('common.edit')!!}</button>
-                  @endhaspermission
+                  @endif
               </div>
             </div>
           </form>
