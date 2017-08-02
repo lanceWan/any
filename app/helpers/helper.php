@@ -90,7 +90,7 @@ if(!function_exists('encodeId')){
 			$connection = 'main';
 		}
 		// 获取加密配置
-		$settings = settings('encrypt', config('admin.global.encrypt'));
+		$settings = config('admin.global.encrypt');
 		// 判断是否开启加密设置
 		if(isset($settings[$connection]) && $settings[$connection]){
 			return Hashids::connection($connection)->encode($id);
@@ -107,7 +107,7 @@ if(!function_exists('decodeId')){
 		}
 
 		// 获取加密配置
-		$settings = settings('encrypt', config('admin.global.encrypt'));
+		$settings = config('admin.global.encrypt');
 		// 判断是否开启加密设置
 		
 		if(isset($settings[$connection]) && $settings[$connection]){
