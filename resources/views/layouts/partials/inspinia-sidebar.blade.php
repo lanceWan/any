@@ -2,14 +2,9 @@
 <nav class="navbar-default navbar-static-side" role="navigation">
   <div class="sidebar-collapse">
     <ul class="nav metismenu" id="side-menu">
-      <li class="nav-header">
-          <div class="dropdown profile-element"> <span>
-            <img alt="image" class="img-circle" src="{{asset(getThemeAssets('img/profile_small.jpg'))}}" />
-             </span>
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-              <span class="clear"></span>
-              <span class="block m-t-xs"><strong class="font-bold">晚黎</strong></span>
-            </a>
+      <li class="nav-header text-center">
+          <div class="dropdown profile-element">
+            <h1 class="text-info"><strong class="font-bold">Any</strong></h1>
           </div>
           <div class="logo-element">
             Any

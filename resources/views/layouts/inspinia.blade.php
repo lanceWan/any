@@ -23,7 +23,7 @@
           </div>
           <ul class="nav navbar-top-links navbar-right">
               <li>
-                  <span class="m-r-sm text-muted welcome-message">Hi,晚黎</span>
+                  <span class="m-r-sm text-muted welcome-message">Hi,{{auth()->user()->name}}</span>
               </li>
               @if(hasPermission('settingcontroller.language'))
               <li>
