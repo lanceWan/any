@@ -116,7 +116,9 @@
             <div class="form-group">
               <div class="col-sm-4 col-sm-offset-2">
                   <a class="btn btn-white" href="{{route('user.index')}}">{!!trans('common.cancel')!!}</a>
+                  @if(hasPermission('usercontroller.store'))
                   <button class="btn btn-primary" type="submit">{!!trans('common.create')!!}</button>
+                  @endif
               </div>
             </div>
           </form>

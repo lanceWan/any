@@ -25,18 +25,21 @@
               <li>
                   <span class="m-r-sm text-muted welcome-message">Hi,晚黎</span>
               </li>
+              @if(hasPermission('system.language'))
               <li>
-                <div class="btn-group">
-                  <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Action <span class="caret"></span></button>
-                  <ul class="dropdown-menu">
-                      <li><a href="#">Action</a></li>
-                      <li><a href="#">Another action</a></li>
-                      <li><a href="#">Something else here</a></li>
-                      <li class="divider"></li>
-                      <li><a href="#">Separated link</a></li>
-                  </ul>
-                </div>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
+                  <i class="fa fa-wrench"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                  <li>
+                    <a href="{{url('admin/setting/zh')}}">{{trans('common.zh')}}</a>
+                  </li>
+                  <li>
+                    <a href="{{url('admin/setting/en')}}">{{trans('common.en')}}</a>
+                  </li>
+                </ul>
               </li>
+              @endif
               <li>
                   <a href="{{ url('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                       <i class="fa fa-sign-out"></i> 退出

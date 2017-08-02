@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\RoleService;
 use App\Http\Requests\Admin\RoleRequest;
-class RoleController extends Controller
+class RoleController extends BaseController
 {
 
     protected $service;

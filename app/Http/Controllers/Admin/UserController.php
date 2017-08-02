@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\UserService;
 use App\Http\Requests\Admin\UserRequest;
-class UserController extends Controller
+class UserController extends BaseController
 {
 
     protected $service;
 
     public function __construct(UserService $service)
     {
+        parent::__construct();
         $this->service = $service;
     }
 

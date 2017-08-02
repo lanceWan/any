@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => ['auth', 'check.permission']],function ($router)
+Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => ['auth', 'check.permission', 'language']],function ($router)
 {
 	$router->get('/','HomeController@index');
 
@@ -33,5 +33,8 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => ['auth
 	// 菜单
 	$router->get('menu/clear','MenuController@cacheClear');
 	$router->resource('menu','MenuController');
+
+	$router->get('setting/{lang}', 'SettingController@language');
+
 
 });

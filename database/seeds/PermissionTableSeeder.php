@@ -19,6 +19,12 @@ class PermissionTableSeeder extends Seeder
             'slug' => 'system.manage',
             'description' => '系统管理'
         ]);
+
+        Permission::create([
+            'name' => '后台语言切换',
+            'slug' => 'system.language',
+            'description' => '后台语言切换'
+        ]);
         /**
          * 显示菜单列表
          */

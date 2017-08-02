@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\MenuService;
 use App\Http\Requests\Admin\MenuRequest;
-class MenuController extends Controller
+class MenuController extends BaseController
 {
 
     protected $service;
