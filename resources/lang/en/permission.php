@@ -4,7 +4,7 @@ return array (
   'created_at' => 'Created At',
   'description' => 'Description',
   'name' => 'Name',
-  'slug' => 'Slug',
+  'slug' => 'Permission',
   'title' => 'Permission Management',
   'updated_at' => 'Updated At',
 );
