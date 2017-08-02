@@ -18,7 +18,7 @@ if(!function_exists('getTheme')){
 		if (cache()->has('theme')) {
 			return cache('theme');
 		}
-		$theme = settings('theme', config('admin.global.theme'));
+		$theme = config('admin.global.theme');
 		cache()->forever('theme', $theme);
 		return $theme;
 	}
