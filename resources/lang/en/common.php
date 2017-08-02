@@ -23,4 +23,5 @@ return array (
   'show' => 'Show',
   'yes' => 'YES',
   'zh' => 'zh',
+  'logout' => 'Logout',
 );

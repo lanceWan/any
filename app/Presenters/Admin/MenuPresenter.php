@@ -221,7 +221,7 @@ Eof;
 		$str = '';
 		if ($permissions->isNotEmpty()) {
 			foreach ($permissions as $v) {
-				$str .= "<option value='{$v->name}' {$this->checkMenu($v->name,$slug)}>{$v->name}</option>";
+				$str .= "<option value='{$v->slug}' {$this->checkMenu($v->slug,$slug)}>{$v->name}</option>";
 			}
 		}
 		return $str;

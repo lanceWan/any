@@ -84,7 +84,7 @@ class MenuService {
 	public function create()
 	{
 		$menus = $this->getMenuList();
-		$permissions = PermissionRepositoryEloquent::all(['name']);
+		$permissions = PermissionRepositoryEloquent::all(['name', 'slug']);
 		return compact('menus', 'permissions');
 	}
 

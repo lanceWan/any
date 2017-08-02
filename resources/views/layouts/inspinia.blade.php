@@ -25,10 +25,11 @@
               <li>
                   <span class="m-r-sm text-muted welcome-message">Hi,晚黎</span>
               </li>
-              @if(hasPermission('system.language'))
+              @if(hasPermission('settingcontroller.language'))
               <li>
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
-                  <i class="fa fa-wrench"></i>
+                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="true">
+                  <i class="fa fa-language text-warning"></i>
+                  <span class="label label-warning">{{session('locale', config('app.fallback_locale'))}}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                   <li>
@@ -41,8 +42,18 @@
               </li>
               @endif
               <li>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
+                  <i class="fa fa-tint fa-lg text-info"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                  <li>
+                    <a href="#">主题开发中...</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
                   <a href="{{ url('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                      <i class="fa fa-sign-out"></i> 退出
+                      <i class="fa fa-sign-out"></i> {{trans('common.logout')}}
                       <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
                   </a>
               </li>
@@ -52,7 +63,7 @@
       @yield('content')
       <div class="footer">
           <div class="pull-right">
-            github: <strong><a href="https://github.com/lanceWan" target="_blank">https://github.com/lanceWan</a></strong>
+            <i class="fa fa-github"></i> <strong><a href="https://github.com/lanceWan" target="_blank">https://github.com/lanceWan</a></strong>
           </div>
           <div>
               <strong>Copyright</strong> 晚黎后台 &copy; http://www.iwanli.me
