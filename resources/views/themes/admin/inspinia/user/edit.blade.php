@@ -118,7 +118,7 @@
             <div class="form-group">
               <div class="col-sm-4 col-sm-offset-2">
                   <a class="btn btn-white" href="{{route('user.index')}}">{!!trans('common.cancel')!!}</a>
-                  @if(hasPermission('usercontroller.update'))
+                  @if(haspermission('usercontroller.update'))
                   <button class="btn btn-primary" type="submit">{!!trans('common.edit')!!}</button>
                   @endif
               </div>

@@ -22,7 +22,7 @@
   </div>
   <div class="col-lg-2">
     <div class="title-action">
-      @if(hasPermission('menucontroller.cacheclear'))
+      @if(haspermission('menucontroller.cacheclear'))
       <a href="{{url('admin/menu/clear')}}" class="btn btn-info"><i class="fa fa-cancel"></i> 
         {{trans('menu.cache_clear')}}
       </a>

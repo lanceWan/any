@@ -70,7 +70,7 @@
             <div class="form-group">
               <div class="col-sm-4 col-sm-offset-2">
                   <a class="btn btn-white" href="{{route('permission.index')}}">{!!trans('common.cancel')!!}</a>
-                  @if(hasPermission('permissioncontroller.store'))
+                  @if(haspermission('permissioncontroller.store'))
                   <button class="btn btn-primary" type="submit">{!!trans('common.create')!!}</button>
                   @endif
               </div>

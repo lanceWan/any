@@ -17,7 +17,7 @@
   </div>
   <div class="col-lg-2">
     <div class="title-action">
-      @if(hasPermission('rolecontroller.create'))
+      @if(haspermission('rolecontroller.create'))
       <a href="{{route('role.create')}}" class="btn btn-info"><i class="fa fa-plus"></i> {!!trans('common.create').trans('role.slug')!!}</a>
       @endif
     </div>

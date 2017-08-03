@@ -17,7 +17,7 @@
   </div>
   <div class="col-lg-2">
     <div class="title-action">
-      @if(hasPermission('usercontroller.create'))
+      @if(haspermission('usercontroller.create'))
       <a href="{{route('user.create')}}" class="btn btn-info"><i class="fa fa-plus"></i> {!!trans('common.create').trans('user.slug')!!}</a>
       @endif
     </div>

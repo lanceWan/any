@@ -25,7 +25,7 @@
               <li>
                   <span class="m-r-sm text-muted welcome-message">Hi,{{auth()->user()->name}}</span>
               </li>
-              @if(hasPermission('settingcontroller.language'))
+              @if(haspermission('settingcontroller.language'))
               <li>
                 <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="true">
                   <i class="fa fa-language text-warning"></i>

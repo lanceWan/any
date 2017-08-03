@@ -79,13 +79,13 @@ Eof;
 	{
 		$action = '<div class="pull-right">';
 		$encodeId =  [encodeId($id, 'menu')];
-		if (hasPermission('menucontroller.show')) {
+		if (haspermission('menucontroller.show')) {
 			$action .= '<a href="javascript:;" class="btn btn-xs tooltips showInfo" data-href="'.route('menu.show',  $encodeId).'" data-toggle="tooltip" data-original-title="'.trans('common.show').'"  data-placement="top"><i class="fa fa-eye"></i></a>';
 		}
-		if (hasPermission('menucontroller.edit')) {
+		if (haspermission('menucontroller.edit')) {
 			$action .= '<a href="javascript:;" data-href="'.route('menu.edit', $encodeId).'" class="btn btn-xs tooltips editMenu" data-toggle="tooltip"data-original-title="'.trans('common.edit').'"  data-placement="top"><i class="fa fa-edit"></i></a>';
 		}
-		if (hasPermission('menucontroller.destroy')) {
+		if (haspermission('menucontroller.destroy')) {
 			$action .= '<a href="javascript:;" class="btn btn-xs tooltips destroy_item" data-id="'.$id.'" data-original-title="'.trans('common.delete').'"data-toggle="tooltip"  data-placement="top"><i class="fa fa-trash"></i><form action="'.route('menu.destroy',  $encodeId).'" method="POST" style="display:none"><input type="hidden"name="_method" value="delete"><input type="hidden" name="_token" value="'.csrf_token().'"></form></a>';
 		}
 		$action .= '</div>';
@@ -99,7 +99,7 @@ Eof;
 	 */
 	public function canCreateMenu()
 	{
-		$canCreateMenu = hasPermission('permissioncontroller.create');
+		$canCreateMenu = haspermission('permissioncontroller.create');
 
 		$title = $canCreateMenu ?  trans('menu.welcome'):trans('menu.sorry');
 		$desc = $canCreateMenu ? trans('menu.description'):trans('menu.description_sorry');
@@ -176,7 +176,7 @@ Eof;
 		$html = '';
 		if ($sidebarMenus) {
 			foreach ($sidebarMenus as $menu) {
-				if (!hasPermission($menu['slug'])) {
+				if (!haspermission($menu['slug'])) {
 					continue;
 				}
 				if ($menu['child']) {
