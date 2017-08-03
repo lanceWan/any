@@ -32,7 +32,7 @@ class MenuRequest extends FormRequest
         if ($this->pid) {
             $rule['url'] = 'required';
         }
-        return rule;
+        return $rule;
     }
 
     /**
