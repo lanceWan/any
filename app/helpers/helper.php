@@ -55,6 +55,16 @@ if(!function_exists('setUserPermissions')){
         ]);
 	}
 }
+
+/**
+ * 清空缓存
+ */
+if(!function_exists('cacheClear')){
+	function cacheClear()
+	{
+		cache()->flush();
+	}
+}
 /**
  * 获取当前用户权限、角色
  */

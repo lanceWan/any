@@ -160,6 +160,7 @@ Eof
 				if (isset($attributes['permission']) && $attributes['permission']) {
 					$result->userPermissions()->sync($attributes['permission']);
 				}
+				cacheClear();
 			}
 			flash_info($result,trans('common.create_success'),trans('common.create_error'));
 			return isset($attributes['rediret']) ? $this->createRoute : $this->indexRoute;
@@ -241,6 +242,7 @@ Eof
 				}else{
 					$result->userPermissions()->sync([]);
 				}
+				cacheClear();
 			}
 			flash_info($result,trans('common.edit_success'),trans('common.edit_error'));
 			return $this->indexRoute;
@@ -261,6 +263,7 @@ Eof
 	{
 		try {
 			$result = UserRepositoryEloquent::delete(decodeId($id, $this->module));
+			cacheClear();
 			flash_info($result,trans('common.destroy_success'),trans('common.destroy_error'));
 		} catch (Exception $e) {
 			flash(trans('common.destroy_error'), 'danger');

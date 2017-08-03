@@ -202,6 +202,7 @@ Eof
 				}else{
 					$result->permissions()->sync([]);
 				}
+				cacheClear();
 			}
 			flash_info($result,trans('common.edit_success'),trans('common.edit_error'));
 			return $this->indexRoute;
@@ -222,6 +223,7 @@ Eof
 	{
 		try {
 			$result = RoleRepositoryEloquent::delete(decodeId($id, $this->module));
+			cacheClear();
 			flash_info($result,trans('common.destroy_success'),trans('common.destroy_error'));
 		} catch (Exception $e) {
 			flash(trans('common.destroy_error'), 'danger');
