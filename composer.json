@@ -6,9 +6,18 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "barryvdh/laravel-translation-manager": "^0.4.1",
+        "edvinaskrucas/settings": "^2.0",
         "fideloper/proxy": "~3.3",
+        "hieu-le/active": "^3.5",
+        "iwanli/any": "^1.1",
         "laravel/framework": "5.5.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "ultraware/roles": "^5.5",
+        "vinkla/hashids": "^3.3",
+        "yajra/laravel-datatables-buttons": "^3.1",
+        "yajra/laravel-datatables-html": "^3.2",
+        "yajra/laravel-datatables-oracle": "^8.3"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
@@ -23,7 +32,10 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": [
+            "app/helpers/helper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
