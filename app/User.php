@@ -4,11 +4,10 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Ultraware\Roles\Contracts\HasRoleAndPermission as HasRoleAndPermissionContracts;
-use Ultraware\Roles\Traits\HasRoleAndPermission;
-class User extends Authenticatable implements HasRoleAndPermissionContracts
+
+class User extends Authenticatable
 {
-    use Notifiable, HasRoleAndPermission;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +15,7 @@ class User extends Authenticatable implements HasRoleAndPermissionContracts
      * @var array
      */
     protected $fillable = [
-        'username', 'name', 'email', 'password',
+        'name', 'email', 'password',
     ];
 
     /**
