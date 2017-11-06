@@ -93,6 +93,6 @@ class PermissionController extends BaseController
     public function destroy($id)
     {
         $this->service->destroy($id);
-        redirect()->route('permission.index');
+        return redirect()->route('permission.index');
     }
 }

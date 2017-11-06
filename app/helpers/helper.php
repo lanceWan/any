@@ -78,6 +78,8 @@ if(!function_exists('getCurrentPermission')){
 		}
 
 		$this->setUserPermissions($user);
+
+		return cache($key);
 	}
 }
 /**
@@ -141,9 +143,9 @@ if(!function_exists('haspermission')){
             $user = auth()->user();
             $userPermissions =  getCurrentPermission($user);
 
-            $check = in_array($permission, $userPermissions['permissions']);
+            $check = in_array($permission, (array)$userPermissions['permissions']);
 
-            if (in_array('admin', $userPermissions['roles']) && !$check) {
+            if (in_array('admin', (array)$userPermissions['roles']) && !$check) {
                 $newPermission = \App\Models\Permission::firstOrCreate([
                     'slug' => $permission,
                 ],[
