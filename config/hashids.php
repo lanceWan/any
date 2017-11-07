@@ -38,31 +38,26 @@ return [
     */
 
     'connections' => [
-
         'main' => [
             'salt' => 'iwanli.main',
             'length' => '8',
             'alphabet' => 'abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ',
         ],
-
         'permission' => [
             'salt' => 'iwanli.permission',
             'length' => '8',
             'alphabet' => 'abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ',
         ],
-
         'role' => [
             'salt' => 'iwanli.role',
             'length' => '8',
             'alphabet' => 'abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ',
         ],
-
         'user' => [
             'salt' => 'iwanli.user',
             'length' => '8',
             'alphabet' => 'abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ',
         ],
-
     ],
 
 ];

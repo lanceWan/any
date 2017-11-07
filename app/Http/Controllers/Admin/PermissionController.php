@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\PermissionService;
 use App\Http\Requests\Admin\PermissionRequest;
-class PermissionController extends BaseController
+
+class PermissionController extends Controller
 {
     protected $service;
-
     public function __construct(PermissionService $service)
     {
+        parent::__construct();
         $this->service = $service;
     }
     /**
@@ -25,7 +26,6 @@ class PermissionController extends BaseController
         
         return request()->ajax() ? $result : view(getThemeView('permission.list'))->with($result);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -35,7 +35,6 @@ class PermissionController extends BaseController
     {
         return view(getThemeView('permission.create'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -47,7 +46,6 @@ class PermissionController extends BaseController
         $route = $this->service->store($request->all());
         return redirect()->route($route);
     }
-
     /**
      * Display the specified resource.
      *
@@ -58,7 +56,6 @@ class PermissionController extends BaseController
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -70,7 +67,6 @@ class PermissionController extends BaseController
         $result = $this->service->edit($id);
         return view(getThemeView('permission.edit'))->with($result);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -83,7 +79,6 @@ class PermissionController extends BaseController
         $route = $this->service->update($request->all(), $id);
         return redirect()->route($route);
     }
-
     /**
      * Remove the specified resource from storage.
      *

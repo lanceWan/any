@@ -3,10 +3,10 @@
 <link href="{{asset(getThemeAssets('iCheck/custom.css', true))}}" rel="stylesheet">
 @endsection
 @section('content')
-@inject('userPresenter','App\Presenters\Admin\UserPresenter')
+@inject('userPresenter','App\Repositories\Presenters\Admin\UserPresenter')
 <div class="row wrapper border-bottom white-bg page-heading">
   <div class="col-lg-10">
-    <h2>{!!trans('user.title')!!}</h2>
+    <h2>{!! trans('user.title') !!}</h2>
     <ol class="breadcrumb">
         <li>
             <a href="{{url('admin')}}">{!!trans('home.title')!!}</a>

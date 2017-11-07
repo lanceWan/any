@@ -6,13 +6,11 @@ class MenuComposer
 {
     
     protected $service;
-
     
     public function __construct(MenuService $service)
     {
         $this->service = $service;
     }
-
     
     public function compose(View $view)
     {

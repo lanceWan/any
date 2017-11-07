@@ -28,19 +28,12 @@ class MenuRequest extends FormRequest
             'pid' => 'required',
             'slug' => 'required',
         ];
-
         if ($this->pid) {
             $rule['url'] = 'required';
         }
         return $rule;
     }
-
-    /**
-     * 验证信息
-     * @Author   晚黎
-     * @DateTime 2017-07-26T22:24:11+0800
-     * @return   [type]                   [description]
-     */
+    
     public function messages()
     {
         return [
@@ -48,12 +41,6 @@ class MenuRequest extends FormRequest
         ];
     }
     
-    /**
-     * 字段名称
-     * @Author   晚黎
-     * @DateTime 2017-07-26T22:24:19+0800
-     * @return   [type]                   [description]
-     */
     public function attributes()
     {
         return [

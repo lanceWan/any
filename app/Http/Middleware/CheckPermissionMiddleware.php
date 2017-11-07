@@ -2,9 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Permission;
-use App\Models\Role;
-
 use Closure;
 use Route;
 class CheckPermissionMiddleware
@@ -21,7 +18,6 @@ class CheckPermissionMiddleware
         $this->checkPermission();
         return $this->checkPermission() ? $next($request) : abort(500, '没有权限访问');
     }
-
     /**
      * 验证用户权限
      * @author 晚黎
@@ -32,10 +28,8 @@ class CheckPermissionMiddleware
     {
         $method = $this->getCurrentControllerMethod();
         $actionName = $this->getCurrentControllerName();
-
         return haspermission(strtolower($actionName.'.'.$method));
     }
-
     /**
      * 获取当前控制器方法
      * @author 晚黎
@@ -46,7 +40,6 @@ class CheckPermissionMiddleware
     {  
         return $this->getCurrentActionAttribute()['method'];
     }
-
     /**
      * 获取当前控制器名称
      * @author 晚黎
@@ -57,7 +50,6 @@ class CheckPermissionMiddleware
     {  
         return $this->getCurrentActionAttribute()['controller'];
     }  
-
     /**
      * 获取当前控制器相关属性
      * @author 晚黎
@@ -70,6 +62,4 @@ class CheckPermissionMiddleware
         list($class, $method) = explode('@', $action);
         return ['controller' => class_basename($class), 'method' => $method];
     } 
-
-
 }

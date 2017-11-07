@@ -21,7 +21,7 @@ class UserRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+     public function rules()
     {
         $rules['name'] = 'required';
         // 添加用户
@@ -37,13 +37,7 @@ class UserRequest extends FormRequest
         }
         return $rules;
     }
-
-    /**
-     * 验证信息
-     * @Author   晚黎
-     * @DateTime 2017-07-26T22:24:11+0800
-     * @return   [type]                   [description]
-     */
+    
     public function messages()
     {
         return [
@@ -51,13 +45,7 @@ class UserRequest extends FormRequest
             'unique'    => trans('validation.unique'),
         ];
     }
-    
-    /**
-     * 字段名称
-     * @Author   晚黎
-     * @DateTime 2017-07-26T22:24:19+0800
-     * @return   [type]                   [description]
-     */
+
     public function attributes()
     {
         return [

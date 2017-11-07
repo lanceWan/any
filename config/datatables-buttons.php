@@ -37,7 +37,7 @@ return [
      * Snappy package: barryvdh/laravel-snappy
      * Excel package: maatwebsite/excel
      */
-    'pdf_generator'   => 'excel',
+    'pdf_generator'   => 'snappy',
 
     /**
      * Snappy PDF options.
@@ -52,4 +52,19 @@ return [
         ],
         'orientation' => 'landscape',
     ],
+
+    /**
+     * Default html builder parameters.
+     */
+    'parameters' => [
+        'dom'     => 'Bfrtip',
+        'order'   => [[0, 'desc']],
+        'buttons' => [
+            'create',
+            'export',
+            'print',
+            'reset',
+            'reload',
+        ],
+    ]
 ];

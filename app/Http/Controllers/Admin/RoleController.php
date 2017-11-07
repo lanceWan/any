@@ -3,19 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Services\Admin\RoleService;
 use App\Http\Requests\Admin\RoleRequest;
+
 class RoleController extends BaseController
 {
-
     protected $service;
-
     public function __construct(RoleService $service)
     {
+    	parent::__construct();
         $this->service = $service;
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +24,6 @@ class RoleController extends BaseController
         $result = $this->service->index();
         return request()->ajax() ? $result : view(getThemeView('role.list'))->with($result);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -37,7 +34,6 @@ class RoleController extends BaseController
         $permissions = $this->service->create();
         return view(getThemeView('role.create'))->with(compact('permissions'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -49,7 +45,6 @@ class RoleController extends BaseController
         $route = $this->service->store($request->all());
         return redirect()->route($route);
     }
-
     /**
      * Display the specified resource.
      *
@@ -61,7 +56,6 @@ class RoleController extends BaseController
         $result = $this->service->show($id);
         return view(getThemeView('role.show'))->with($result);
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -73,7 +67,6 @@ class RoleController extends BaseController
         $result = $this->service->edit($id);
         return view(getThemeView('role.edit'))->with($result);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -86,7 +79,6 @@ class RoleController extends BaseController
         $route = $this->service->update($request->all(), $id);
         return redirect()->route($route);
     }
-
     /**
      * Remove the specified resource from storage.
      *

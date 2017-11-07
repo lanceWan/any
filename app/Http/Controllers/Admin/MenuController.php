@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Services\Admin\MenuService;
 use App\Http\Requests\Admin\MenuRequest;
+
 class MenuController extends BaseController
 {
-
     protected $service;
 
     public function __construct(MenuService $service)
@@ -25,7 +23,6 @@ class MenuController extends BaseController
         $menus = $this->service->getMenuList();
         return view(getThemeView('menu.list'))->with(compact('menus'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -36,7 +33,6 @@ class MenuController extends BaseController
         $result = $this->service->create();
         return view(getThemeView('menu.create'))->with($result);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -48,7 +44,6 @@ class MenuController extends BaseController
         $result = $this->service->store($request->all());
         return response()->json($result);
     }
-
     /**
      * Display the specified resource.
      *
@@ -60,7 +55,6 @@ class MenuController extends BaseController
         $result = $this->service->show($id);
         return view(getThemeView('menu.show'))->with($result);
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -72,7 +66,6 @@ class MenuController extends BaseController
         $result = $this->service->edit($id);
         return view(getThemeView('menu.edit'))->with($result);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -85,7 +78,6 @@ class MenuController extends BaseController
         $result = $this->service->update($request->all(), $id);
         return response()->json($result);
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -100,8 +92,8 @@ class MenuController extends BaseController
     /**
      * 清除菜单缓存
      * @author 晚黎
-     * @date   2017-08-01T11:03:45+0800
-     * @return [type]                   [description]
+     * @date   2017-11-07
+     * @return [type]     [description]
      */
     public function cacheClear()
     {

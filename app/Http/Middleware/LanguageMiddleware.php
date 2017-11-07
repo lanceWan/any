@@ -15,7 +15,6 @@ class LanguageMiddleware
      */
     public function handle($request, Closure $next)
     {
-
         app()->setLocale(session('locale', config('app.fallback_locale')));
         return $next($request);
     }

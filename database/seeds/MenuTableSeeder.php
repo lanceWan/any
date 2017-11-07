@@ -21,7 +21,6 @@ class MenuTableSeeder extends Seeder
 	        'description' => "后台首页",
         ]);
 
-
         $system = Menu::create([
         	'name' => "系统管理",
 	        'pid' => 0,
@@ -60,7 +59,7 @@ class MenuTableSeeder extends Seeder
 	        'active' => "admin/permission*",
 	        'description' => "显示权限管理",
         ]);
-
+        
         Menu::create([
         	'name' => "菜单管理",
 	        'pid' => $system->id,

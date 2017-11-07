@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset(getThemeAssets('ladda/ladda-themeless.min.css', true))}}">
 @endsection
 @section('content')
-@inject('menuPreseter','App\Presenters\Admin\MenuPresenter')
+@inject('menuPreseter','App\Repositories\Presenters\Admin\MenuPresenter')
 <div class="row wrapper border-bottom white-bg page-heading">
   <div class="col-lg-10">
     <h2>{!!trans('menu.title')!!}</h2>

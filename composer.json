@@ -5,25 +5,25 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=5.6.4",
-        "barryvdh/laravel-translation-manager": "^0.2.9",
+        "php": ">=7.0.0",
+        "barryvdh/laravel-translation-manager": "^0.4.1",
         "edvinaskrucas/settings": "^2.0",
-        "hieu-le/active": "^3.4",
-        "laracasts/flash": "^3.0",
-        "laravel/framework": "5.4.*",
+        "fideloper/proxy": "~3.3",
+        "hieu-le/active": "^3.5",
+        "iwanli/any": "^1.1",
+        "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
-        "prettus/l5-repository": "^2.6",
-        "ultraware/roles": "^5.4",
-        "vinkla/hashids": "^3.1",
-        "yajra/laravel-datatables-buttons": "^2.0",
-        "yajra/laravel-datatables-html": "^2.0",
-        "yajra/laravel-datatables-oracle": "^7.9"
+        "ultraware/roles": "^5.5",
+        "vinkla/hashids": "^3.3",
+        "yajra/laravel-datatables-buttons": "^3.1",
+        "yajra/laravel-datatables-html": "^3.2",
+        "yajra/laravel-datatables-oracle": "^8.3"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^2.4",
+        "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.7"
+        "mockery/mockery": "~1.0",
+        "phpunit/phpunit": "~6.0"
     },
     "autoload": {
         "classmap": [
@@ -42,31 +42,27 @@
             "Tests\\": "tests/"
         }
     },
+    "extra": {
+        "laravel": {
+            "dont-discover": [
+            ]
+        }
+    },
     "scripts": {
         "post-root-package-install": [
-            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "php artisan key:generate"
+            "@php artisan key:generate"
         ],
-        "post-install-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "php artisan optimize"
-        ],
-        "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan optimize"
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover"
         ]
     },
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true
-    },
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://packagist.phpcomposer.com"
-        }
     }
 }

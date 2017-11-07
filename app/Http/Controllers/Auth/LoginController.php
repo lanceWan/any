@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -36,11 +37,13 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+
     /**
      * 自定义用户名
      * @author 晚黎
-     * @date   2017-07-24T10:00:50+0800
-     * @return [type]                   [description]
+     * @date   2017-11-06
+     * @return [type]     [description]
      */
     public function username()
     {
@@ -50,21 +53,21 @@ class LoginController extends Controller
     /**
      * 自定义登录视图
      * @author 晚黎
-     * @date   2017-07-24T10:33:28+0800
-     * @return [type]                   [description]
+     * @date   2017-11-06
+     * @return [type]     [description]
      */
     public function showLoginForm()
     {
         return view('themes.auth.'.getTheme().'.login');
     }
-
+    
     /**
      * 用户登录成功后缓存用户权限
      * @author 晚黎
-     * @date   2017-07-24T14:44:44+0800
-     * @param  Request                  $request [description]
-     * @param  [type]                   $user    [description]
-     * @return [type]                            [description]
+     * @date   2017-11-06
+     * @param  Request    $request [description]
+     * @param  [type]     $user    [description]
+     * @return [type]              [description]
      */
     protected function authenticated(Request $request, $user)
     {

@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+
 class RoleRequest extends FormRequest
 {
     /**
@@ -36,13 +36,7 @@ class RoleRequest extends FormRequest
         }
         return $rules;
     }
-
-    /**
-     * 验证信息
-     * @Author   晚黎
-     * @DateTime 2017-07-26T22:24:11+0800
-     * @return   [type]                   [description]
-     */
+    
     public function messages()
     {
         return [
@@ -51,12 +45,6 @@ class RoleRequest extends FormRequest
         ];
     }
     
-    /**
-     * 字段名称
-     * @Author   晚黎
-     * @DateTime 2017-07-26T22:24:19+0800
-     * @return   [type]                   [description]
-     */
     public function attributes()
     {
         return [

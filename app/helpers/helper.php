@@ -8,7 +8,6 @@ if(!function_exists('getThemeView')){
 		return 'themes.admin.'.getTheme().'.'.$view;
 	}
 }
-
 /**
  * 获取主题
  */
@@ -23,7 +22,6 @@ if(!function_exists('getTheme')){
 		return $theme;
 	}
 }
-
 /**
  * 获取页面资源文件
  */
@@ -33,7 +31,6 @@ if(!function_exists('getThemeAssets')){
 		return $vendors ? 'vendors/'.$asset : 'themes/admin/'.getTheme().'/'.$asset;
 	}
 }
-
 /**
  * 刷新用户权限、角色
  */
@@ -43,10 +40,8 @@ if(!function_exists('setUserPermissions')){
 		$rolePermissions = $user->rolePermissions()->get()->pluck('slug');
         $userPermissions = $user->userPermissions()->get()->pluck('slug');
         $permissions = array_unique($rolePermissions->merge($userPermissions)->all());
-
         $roles = $user->getRoles()->pluck('slug')->all();
         $allPermissions = \App\Models\Permission::all()->pluck('slug')->all();
-
         // 缓存用户权限
         cache()->forever('user_'.$user->id, [
         	'permissions' => $permissions,
@@ -55,7 +50,6 @@ if(!function_exists('setUserPermissions')){
         ]);
 	}
 }
-
 /**
  * 清空缓存
  */
@@ -72,13 +66,10 @@ if(!function_exists('getCurrentPermission')){
 	function getCurrentPermission($user)
 	{
 		$key = 'user_'.$user->id;
-
 		if (cache()->has($key)) {
 			return cache($key);
 		}
-
-		$this->setUserPermissions($user);
-
+		setUserPermissions($user);
 		return cache($key);
 	}
 }
@@ -91,7 +82,6 @@ if(!function_exists('flash_info')){
 		return $result ? flash($successMsg,'success')->important() : flash($errorMsg,'danger')->important();
 	}
 }
-
 /**
  * 加密
  */
@@ -110,14 +100,12 @@ if(!function_exists('encodeId')){
 		return $id;
 	}
 }
-
 if(!function_exists('decodeId')){
 	function decodeId($id,$connection = 'main', $type = false)
 	{
 		if (!config('hashids.connections.'.$connection)) {
 			$connection = 'main';
 		}
-
 		// 获取加密配置
 		$settings = config('admin.global.encrypt');
 		// 判断是否开启加密设置
@@ -142,9 +130,7 @@ if(!function_exists('haspermission')){
             
             $user = auth()->user();
             $userPermissions =  getCurrentPermission($user);
-
             $check = in_array($permission, (array)$userPermissions['permissions']);
-
             if (in_array('admin', (array)$userPermissions['roles']) && !$check) {
                 $newPermission = \App\Models\Permission::firstOrCreate([
                     'slug' => $permission,

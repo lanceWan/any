@@ -2,21 +2,21 @@
 namespace App\Services\Admin;
 
 use Facades\ {
-    App\Repositories\Eloquent\MenuRepositoryEloquent,
-    App\Repositories\Eloquent\PermissionRepositoryEloquent
+    App\Repositories\Eloquent\MenuRepository,
+    App\Repositories\Eloquent\PermissionRepository
 };
 
 use Exception;
 
 class MenuService {
-
+	
 	protected $module = 'menu';
-
+	
 	/**
 	 * 获取菜单数据
-	 * @Author   晚黎
-	 * @DateTime 2017-07-31T21:44:41+0800
-	 * @return   [type]                   [description]
+	 * @author 晚黎
+	 * @date   2017-11-06
+	 * @return [type]     [description]
 	 */
 	public function getMenuList()
 	{
@@ -26,14 +26,14 @@ class MenuService {
 		}
 		return $this->sortMenuSetCache();
 	}
-
+	
 	/**
 	 * 递归菜单数据
-	 * @Author   晚黎
-	 * @DateTime 2017-07-31T21:42:01+0800
-	 * @param    [type]                   $menus [description]
-	 * @param    integer                  $pid   [description]
-	 * @return   [type]                          [description]
+	 * @author 晚黎
+	 * @date   2017-11-06
+	 * @param  [type]     $menus [description]
+	 * @param  integer    $pid   [description]
+	 * @return [type]            [description]
 	 */
 	private function sortMenu($menus,$pid=0)
 	{
@@ -52,13 +52,13 @@ class MenuService {
 	
 	/**
 	 * 排序子菜单并缓存
-	 * @Author   晚黎
-	 * @DateTime 2017-07-31T21:42:12+0800
-	 * @return   [type]                   [description]
+	 * @author 晚黎
+	 * @date   2017-11-06
+	 * @return [type]     [description]
 	 */
 	private function sortMenuSetCache()
 	{
-		$menus = MenuRepositoryEloquent::all()->toArray();
+		$menus = MenuRepository::all()->toArray();
 		if ($menus) {
 			$menuList = $this->sortMenu($menus);
 			foreach ($menuList as $key => &$v) {
@@ -74,30 +74,29 @@ class MenuService {
 		}
 		return '';
 	}
-
 	/**
 	 * 添加菜单视图
-	 * @Author   晚黎
-	 * @DateTime 2017-07-31T22:53:43+0800
-	 * @return   [type]                   [description]
+	 * @author 晚黎
+	 * @date   2017-11-06
+	 * @return [type]     [description]
 	 */
 	public function create()
 	{
 		$menus = $this->getMenuList();
-		$permissions = PermissionRepositoryEloquent::all(['name', 'slug']);
+		$permissions = PermissionRepository::all(['name', 'slug']);
 		return compact('menus', 'permissions');
 	}
-
 	/**
 	 * 添加数据
 	 * @author 晚黎
-	 * @date   2017-08-01T09:18:45+0800
-	 * @return [type]                   [description]
+	 * @date   2017-11-06
+	 * @param  [type]     $attributes [description]
+	 * @return [type]                 [description]
 	 */
 	public function store($attributes)
 	{
 		try {
-			$result = MenuRepositoryEloquent::create($attributes);
+			$result = MenuRepository::create($attributes);
 			if ($result) {
 				// 更新缓存
 				$this->sortMenuSetCache();
@@ -114,47 +113,47 @@ class MenuService {
 			];
 		}
 	}
-
 	/**
 	 * 查看数据
 	 * @author 晚黎
-	 * @date   2017-08-01T10:37:41+0800
-	 * @param  [type]                   $id [description]
-	 * @return [type]                       [description]
+	 * @date   2017-11-06
+	 * @param  [type]     $id [description]
+	 * @return [type]         [description]
 	 */
 	public function show($id)
 	{
 		try {
 			$menus = $this->getMenuList();
-			$menu = MenuRepositoryEloquent::find(decodeId($id, $this->module));
+			$menu = MenuRepository::find(decodeId($id, $this->module));
 			return compact('menus', 'menu');
 		} catch (Exception $e) {
 			abort(500);
 		}
 	}
 
+
 	public function edit($id)
 	{
 		try {
 			$attr = $this->show($id);
-			$permissions = PermissionRepositoryEloquent::all(['name', 'slug']);
+			$permissions = PermissionRepository::all(['name', 'slug']);
 			return array_merge($attr, compact('permissions'));
 		} catch (Exception $e) {
 			abort(500);
 		}
 	}
-
 	/**
 	 * 修改数据
 	 * @author 晚黎
-	 * @date   2017-08-01T10:37:50+0800
-	 * @param  [type]                   $id [description]
-	 * @return [type]                       [description]
+	 * @date   2017-11-06
+	 * @param  [type]     $attributes [description]
+	 * @param  [type]     $id         [description]
+	 * @return [type]                 [description]
 	 */
 	public function update($attributes, $id)
 	{
 		try {
-			$isUpdate = MenuRepositoryEloquent::update($attributes, decodeId($id, $this->module));
+			$isUpdate = MenuRepository::update($attributes, decodeId($id, $this->module));
 			if ($isUpdate) {
 				// 更新缓存
 				$this->sortMenuSetCache();
@@ -173,14 +172,14 @@ class MenuService {
 	/**
 	 * 删除数据
 	 * @author 晚黎
-	 * @date   2017-08-01T11:02:01+0800
-	 * @param  string                   $value [description]
-	 * @return [type]                          [description]
+	 * @date   2017-11-06
+	 * @param  [type]     $id [description]
+	 * @return [type]         [description]
 	 */
 	public function destroy($id)
 	{
 		try {
-			$result = MenuRepositoryEloquent::delete(decodeId($id, $this->module));
+			$result = MenuRepository::delete(decodeId($id, $this->module));
 			if ($result) {
 				$this->sortMenuSetCache();
 			}
@@ -189,11 +188,16 @@ class MenuService {
 			flash(trans('common.destroy_error'), 'danger');
 		}
 	}
-
+	/**
+	 * 清除缓存
+	 * @author 晚黎
+	 * @date   2017-11-06
+	 * @return [type]     [description]
+	 */
 	public function cacheClear()
 	{
 		cache()->forget(config('admin.global.cache.menuList'));
 		flash(trans('common.cache_clear'), 'success')->important();
 	}
-
+	
 }

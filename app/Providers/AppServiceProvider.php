@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Providers;
-use Illuminate\Support\Facades\Blade;
+
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Permission;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -14,8 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Schema::defaultStringLength(191);
-
+         Schema::defaultStringLength(191);
         /**
          * 视图composer共享数据
          */

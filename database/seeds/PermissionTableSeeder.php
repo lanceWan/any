@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Seeder;
 use App\Models\Permission;
 class PermissionTableSeeder extends Seeder
@@ -19,7 +18,6 @@ class PermissionTableSeeder extends Seeder
             'slug' => 'system.manage',
             'description' => '系统管理'
         ]);
-
         Permission::create([
             'name' => '后台语言切换',
             'slug' => 'settingcontroller.language',
@@ -65,7 +63,6 @@ class PermissionTableSeeder extends Seeder
             'slug' => 'menucontroller.edit',
             'description' => '修改菜单视图'
         ]);
-
         /**
          * 修改菜单
          */
@@ -133,7 +130,6 @@ class PermissionTableSeeder extends Seeder
             'slug' => 'rolecontroller.edit',
             'description' => '修改角色视图'
         ]);
-
         /**
          * 修改角色
          */
@@ -220,7 +216,6 @@ class PermissionTableSeeder extends Seeder
             'slug' => 'usercontroller.create',
             'description' => '创建用户视图'
         ]);
-
         /**
          * 创建用户
          */
@@ -261,7 +256,6 @@ class PermissionTableSeeder extends Seeder
             'slug' => 'usercontroller.show',
             'description' => '查看用户信息'
         ]);
-
         /**
          * 后台首页权限
          */
@@ -269,7 +263,6 @@ class PermissionTableSeeder extends Seeder
             'name' => '后台首页',
             'slug' => 'homecontroller.index',
             'description' => '后台首页'
-
         ]);
         
     }

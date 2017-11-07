@@ -3,7 +3,7 @@
 <link href="{{asset(getThemeAssets('iCheck/custom.css', true))}}" rel="stylesheet">
 @endsection
 @section('content')
-@inject('rolePresenter','App\Presenters\Admin\RolePresenter')
+@inject('rolePresenter','App\Repositories\Presenters\Admin\RolePresenter')
 <div class="row wrapper border-bottom white-bg page-heading">
   <div class="col-lg-10">
     <h2>{!!trans('role.title')!!}</h2>
