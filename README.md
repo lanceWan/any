@@ -1,5 +1,5 @@
 # Any
-最简化权限管理系统，基于 Laravel5.4 开发。由于 Laravel5.5 发布推迟，只好先写个 Laravel5.4版本的，后面再升级上去。
+最简化权限管理系统，基于 Laravel5.5 开发。Laravel5.4 版本请切换到 `any54` 分支。
 
 ## Any 是什么
 `Any` 是一个最简化全新管理后台模块，包含最简单的权限控制。最开始写权限系统的时候是看的一个老外写的源码。根据他的代码自己写了一个 基于Laravel5.2 `IAdmin` 后台，这个是最开始权限系系统，为了公用，所有权限都是写的配置文件。
@@ -26,7 +26,7 @@ git clone https://github.com/lanceWan/any.git
 进入到项目然后 `composer` 安装：
 
 ```
-cd iDashboard
+cd any
 
 composer install
 ```
@@ -56,15 +56,6 @@ OK,项目已经配置完成，直接访问首页然后登录即可，不清楚�
 ## 线上演示
 地址：[http://any.iwanli.me](http://any.iwanli.me)
 - 管理员：`iwanli` `123456`
-- 普通用户：`Gutkowski ` `123456`
-
-## 安装错误问题
-如果出现下面的错误：
-```
-The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths.
-```
-
-如果你用 `php artisan key:generate` 生成秘钥的时候就报这个错误，那么请随便复制一个其他 `Laravel` 项目的 `APP_KEY` 到你报错项目的 `.env` 文件中。然后正常执行命令其他命令即可。
 
 ## 建议和反馈
 `Any` 发展离不开大家的反馈和建议，如果大家有什么想法可以直接在 [https://github.com/lanceWan/any/issues](https://github.com/lanceWan/any/issues) 中提出，谢谢。
