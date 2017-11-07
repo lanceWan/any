@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Services\Admin\PermissionService;
 use App\Http\Requests\Admin\PermissionRequest;
 
-class PermissionController extends Controller
+class PermissionController extends BaseController
 {
     protected $service;
     public function __construct(PermissionService $service)
