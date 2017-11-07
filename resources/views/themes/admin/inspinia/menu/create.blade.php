@@ -1,4 +1,4 @@
-@inject('menuPresenter','App\Presenters\Admin\MenuPresenter')
+@inject('menuPresenter','App\Repositories\Presenters\Admin\MenuPresenter')
 <div class="ibox float-e-margins animated bounceIn formBox" id="createBox">
   <div class="ibox-title">
     <h5>{{trans('common.create').trans('menu.desc')}}</h5>

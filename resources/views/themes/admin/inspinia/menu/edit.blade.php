@@ -1,4 +1,4 @@
-@inject('menuPresenter','App\Presenters\Admin\MenuPresenter')
+@inject('menuPresenter','App\Repositories\Presenters\Admin\MenuPresenter')
 <div class="ibox float-e-margins animated bounceIn formBox" id="createBox">
   <div class="ibox-title">
     <h5>{{trans('common.edit').$menu->name.trans('menu.desc')}}</h5>
@@ -39,7 +39,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">{{trans('menu.slug')}}</label>
         <div class="col-sm-10">
-          <select data-placeholder="{{trans('menu.slug')}}" data-live-search="true" class="selectpicker form-control" name="slug">
+          <select data-live-search="true" class="selectpicker form-control" name="slug">
             {!!$menuPresenter->permissionList($permissions, $menu->slug)!!}
           </select>
         </div>
