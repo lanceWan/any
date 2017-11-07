@@ -137,7 +137,7 @@ class MenuService {
 	{
 		try {
 			$attr = $this->show($id);
-			$permissions = PermissionRepositoryEloquent::all(['name']);
+			$permissions = PermissionRepositoryEloquent::all(['name', 'slug']);
 			return array_merge($attr, compact('permissions'));
 		} catch (Exception $e) {
 			abort(500);
