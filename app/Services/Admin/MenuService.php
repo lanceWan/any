@@ -106,7 +106,6 @@ class MenuService {
 				'message' => $result ? trans('common.create_success'):trans('common.create_error'),
 			];
 		} catch (Exception $e) {
-			dd($e);
 			return [
 				'status' => false,
 				'message' => trans('common.create_error'),
