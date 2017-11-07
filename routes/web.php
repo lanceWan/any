@@ -16,7 +16,12 @@ Route::get('/', function () {
 });
 
 
-Auth::routes();
+Route::group(['namespace' => 'Auth', 'middleware' => 'language'], function ($router)
+{
+	$router->get('login', 'LoginController@showLoginForm');
+	$router->post('login', 'LoginController@login');
+	$router->post('logout', 'LoginController@logout');
+});
 
 Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => ['auth', 'check.permission', 'language']],function ($router)
 {
