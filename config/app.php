@@ -186,8 +186,9 @@ return [
         Barryvdh\TranslationManager\ManagerServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
+        // Barryvdh\Debugbar\ServiceProvider::class,
         HieuLe\Active\ActiveServiceProvider::class,
+        Overtrue\LaravelWechat\ServiceProvider::class,
 
     ],
 
@@ -240,6 +241,7 @@ return [
 
         'Settings' => Krucas\Settings\Facades\Settings::class,
         'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
+        'EasyWeChat' => Overtrue\LaravelWechat\Facade::class,
 
     ],
 

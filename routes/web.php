@@ -19,6 +19,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::group(['prefix' => 'wechat', 'namespace' => 'Wecaht', 'middleware' => ['auth']], function ($router)
+{
+	$router->any('/', 'WechatController@serve');
+});
+
 Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => ['auth', 'check.permission', 'language']],function ($router)
 {
 	$router->get('/','HomeController@index');
