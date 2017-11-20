@@ -45,9 +45,9 @@ return [
      * 路由配置
      */
     'route' => [
-        'enabled' => false,         // 是否开启路由
+        'enabled' => true,         // 是否开启路由
         'attributes' => [           // 路由 group 参数
-            'prefix' => null,
+            'prefix' => 'wechat',
             'middleware' => null,
             'as' => 'easywechat::',
         ],
