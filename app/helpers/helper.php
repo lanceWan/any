@@ -77,7 +77,7 @@ if(!function_exists('getCurrentPermission')){
 			return cache($key);
 		}
 
-		$this->setUserPermissions($user);
+		setUserPermissions($user);
 
 		return cache($key);
 	}
