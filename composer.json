@@ -12,7 +12,7 @@
         "laracasts/flash": "^3.0",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "overtrue/laravel-wechat": "^3.1",
+        "overtrue/laravel-wechat": "^3.0",
         "prettus/l5-repository": "^2.6",
         "ultraware/roles": "^5.4",
         "vinkla/hashids": "^3.1",
