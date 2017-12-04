@@ -53,9 +53,6 @@ php artisan migrate --seed
 
 OK,项目已经配置完成，直接访问首页然后登录即可，不清楚路由的可以直接去看 `routes/web.php` 文件。默认管理员账号：`iwanli` , 密码：`123456` 。如果你是在 `Linux` 或 `Mac` 下配置的请注意相关目录的权限，这里我就不多说了，enjoy！
 
-## 线上演示
-地址：[http://any.iwanli.me](http://any.iwanli.me)
-- 管理员：`iwanli` `123456`
 
 ## 建议和反馈
 `Any` 发展离不开大家的反馈和建议，如果大家有什么想法可以直接在 [https://github.com/lanceWan/any/issues](https://github.com/lanceWan/any/issues) 中提出，谢谢。
