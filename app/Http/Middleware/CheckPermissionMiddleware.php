@@ -15,7 +15,6 @@ class CheckPermissionMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $this->checkPermission();
         return $this->checkPermission() ? $next($request) : abort(500, '没有权限访问');
     }
     /**
